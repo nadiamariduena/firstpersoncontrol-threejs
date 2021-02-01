@@ -1,0 +1,388 @@
+// PHONE Portrait & Landscape
+@media screen and(min-width: 320px) and(max-width:480px) {
+}
+// ---------------
+// PHONE Portrait
+@media screen and(min-width: 320px) {
+  header {
+    padding: 0.9em 0em 0.9em 2em;
+    // padding: 5em 2.6em 0em 2.6em; //origin
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: #f7f7f7; //
+    .header-wrapper {
+      nav {
+        height: 40vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        // background-color: red;
+        .logo {
+          //   padding: 0em 0em 0em 0.6em;
+          color: #111111;
+          font-size: 7vh;
+          // 2.4vh; = 17.663999999999998px
+        }
+
+        ul {
+          margin: 0; /* To remove default bottom margin */
+          padding: 3vh 0 3vh 0; /* To remove default left padding */
+          margin: 0 25px 0 0px;
+          li {
+            display: inline;
+            margin: 0 20px 0 20px;
+            font-size: 2.2vh;
+          }
+        }
+      }
+      //
+      // bio
+      .bio-nav {
+        // background-color: #d1d1d1; //
+        padding: 2em 0 3em 0; //origin
+
+        p {
+          width: 60%;
+          font-size: 7vh;
+          text-transform: uppercase;
+
+          letter-spacing: -1px;
+          line-height: 6.9vh;
+          // color: red;
+        }
+      }
+    }
+  }
+}
+// ---------------
+// PHONE Landscape
+@media screen and(max-width: 480px) {
+  header {
+    padding: 0.9em 0em 0.9em 2em;
+    // padding: 5em 2.6em 0em 2.6em; //origin
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: #f7f7f7; //
+    .header-wrapper {
+      nav {
+        height: 40vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        // background-color: red;
+        .logo {
+          //   padding: 0em 0em 0em 0.6em;
+          color: #111111;
+          font-size: 7vh;
+          // 2.4vh; = 17.663999999999998px
+        }
+
+        ul {
+          margin: 0; /* To remove default bottom margin */
+          padding: 3vh 0 3vh 0; /* To remove default left padding */
+          margin: 0 25px 0 0px;
+          li {
+            display: inline;
+            margin: 0 20px 0 20px;
+          }
+        }
+      }
+      //
+      // bio
+      .bio-nav {
+        // background-color: #d1d1d1; //
+        padding: 2em 0 3em 0; //origin
+
+        p {
+          width: 60%;
+          font-size: 6vh;
+          text-transform: uppercase;
+          line-height: 39px;
+          letter-spacing: -1px;
+        }
+      }
+    }
+  }
+}
+// ---------------
+// ---------------
+//
+// TABLET Portrait & Landscape
+@media screen and(min-width: 768px) and(max-width:1024px) {
+}
+
+// ---------------
+// TABLET Portrait
+@media screen and(min-width: 768px) {
+  header {
+    .header-wrapper {
+      nav {
+        height: 40vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        // background-color: red;
+        .logo {
+          //   padding: 0em 0em 0em 0.6em;
+          color: #111111;
+          font-size: 9vh;
+          // 2.4vh; = 17.663999999999998px
+        }
+
+        ul {
+          margin: 0; /* To remove default bottom margin */
+          padding: 3vh 0 3vh 0; /* To remove default left padding */
+          margin: 0 25px 0 0px;
+          li {
+            display: inline;
+            margin: 0 20px 0 20px;
+          }
+        }
+      }
+      //
+      // bio
+      .bio-nav {
+        // background-color: #d1d1d1; //
+        padding: 2em 0 3em 0; //origin
+
+        p {
+          width: 68%;
+          font-size: 8.6vh;
+          text-transform: uppercase;
+          letter-spacing: -1px;
+          line-height: 8vh;
+          // color: red;
+        }
+      }
+    }
+  }
+}
+// ---------------
+// TABLET Landscape
+@media screen and(min-width:1024px) {
+  header {
+    .header-wrapper {
+      nav {
+        height: 40vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        // background-color: red;
+        .logo {
+          //   padding: 0em 0em 0em 0.6em;
+          color: #111111;
+          font-size: 9vh;
+          // 2.4vh; = 17.663999999999998px
+        }
+
+        ul {
+          margin: 0; /* To remove default bottom margin */
+          padding: 3vh 0 3vh 0; /* To remove default left padding */
+          margin: 0 25px 0 0px;
+          li {
+            display: inline;
+            margin: 0 20px 0 20px;
+          }
+        }
+      }
+      //
+      // bio
+      .bio-nav {
+        // background-color: #d1d1d1; //
+        padding: 2em 0 3em 0; //origin
+
+        p {
+          width: 75%;
+          font-size: 8.6vh;
+          text-transform: uppercase;
+          line-height: 7.8vh;
+          letter-spacing: -1px;
+        }
+      }
+    }
+  }
+}
+
+// ---------------
+// ---------------
+// Desktop
+@media screen and(min-width:1224px) {
+  header {
+    padding: 0.9em 0em 0.9em 2em;
+    // padding: 5em 2.6em 0em 2.6em; //origin
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: #f7f7f7; //
+    .header-wrapper {
+      nav {
+        height: 30vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        // background-color: red;
+        .logo {
+          //   padding: 0em 0em 0em 0.6em;
+          color: #111111;
+          font-size: 4.6vw;
+          // 2.4vh; = 17.663999999999998px
+        }
+
+        ul {
+          margin: 0; /* To remove default bottom margin */
+          padding: 3vh 0 3vh 0; /* To remove default left padding */
+          margin: 0 35px 0 0px;
+          li {
+            font-size: 2.1vh;
+            display: inline;
+            margin: 0 20px 0 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+          }
+        }
+      }
+      //
+      // bio
+      .bio-nav {
+        // background-color: #d1d1d1; //
+        padding: 2em 0 3em 0; //origin
+
+        p {
+          width: 60%;
+          font-size: 8vh;
+          text-transform: uppercase;
+          line-height: 7.8vh;
+        }
+      }
+    }
+  }
+}
+
+// ---------------
+// LARGE Desktop
+@media screen and(min-width:1324px) {
+  header {
+    padding: 0.9em 0em 0.9em 2em;
+    // padding: 5em 2.6em 0em 2.6em; //origin
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: #f7f7f7; //
+    .header-wrapper {
+      nav {
+        height: 30vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        // background-color: red;
+        .logo {
+          //   padding: 0em 0em 0em 0.6em;
+          color: #111111;
+          font-size: 4.6vw;
+          // 2.4vh; = 17.663999999999998px
+        }
+
+        ul {
+          margin: 0; /* To remove default bottom margin */
+          padding: 3vh 0 3vh 0; /* To remove default left padding */
+          margin: 0 35px 0 0px;
+          li {
+            display: inline;
+            margin: 0 20px 0 30px;
+            font-size: 2.4vh;
+            font-weight: 600;
+          }
+        }
+      }
+      //
+      // bio
+      .bio-nav {
+        // background-color: #d1d1d1; //
+        padding: 2em 0 3em 0; //origin
+
+        p {
+          width: 60%;
+          font-size: 9vh;
+          text-transform: uppercase;
+          line-height: 8.8vh;
+        }
+      }
+    }
+  }
+}
+
+// ---------------
+// LARGE Desktop
+@media screen and(min-width:1824px) {
+  header {
+    padding: 0.9em 0em 0.9em 2em;
+    // padding: 5em 2.6em 0em 2.6em; //origin
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: #f7f7f7; //
+    .header-wrapper {
+      nav {
+        height: 30vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        // background-color: red;
+        .logo {
+          //   padding: 0em 0em 0em 0.6em;
+          color: #111111;
+          font-size: 4.6vw;
+          // 2.4vh; = 17.663999999999998px
+        }
+
+        ul {
+          margin: 0; /* To remove default bottom margin */
+          padding: 3vh 0 3vh 0; /* To remove default left padding */
+          margin: 0 35px 0 0px;
+          li {
+            display: inline;
+            margin: 0 20px 0 30px;
+            font-size: 2.4vh;
+          }
+        }
+      }
+      //
+      // bio
+      .bio-nav {
+        // background-color: #d1d1d1; //
+        padding: 2em 0 3em 0; //origin
+
+        p {
+          width: 60%;
+          font-size: 9vh;
+          text-transform: uppercase;
+          line-height: 90px;
+        }
+      }
+    }
+  }
+}

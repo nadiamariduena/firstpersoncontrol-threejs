@@ -1,0 +1,48 @@
+@import "header";
+@import "home";
+@import "homePortfolioGallery";
+@import "home_contact";
+@import "homeFooterTextAnim";
+
+//
+@import "fonts";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  font-size: 16px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  // overscroll-behavior-y: none;
+  overflow-x: hidden;
+}
+
+.App {
+  #wrapper-app {
+    width: 100vw;
+    height: auto;
+    padding: 0 0 0 0;
+    background-color: #ebebeb;
+    // background-color: #cc4a27;
+    transition: transform 0.25s;
+    /* will keep a tracker so it runs really quickly */
+    will-change: transform;
+    overflow: hidden;
+  }
+
+  //
+  //
+
+  //
+}

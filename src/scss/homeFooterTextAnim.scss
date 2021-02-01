@@ -1,0 +1,408 @@
+// PHONE Portrait & Landscape
+@media screen and(min-width: 320px) and(max-width:480px) {
+}
+//
+//
+//
+// ---------------
+// PHONE Portrait (all big mobile versions)
+//
+@media screen and(min-width: 320px) {
+  .footer-home {
+    // padding: 0em 2.6em 0em 2.6em;
+    padding: 0 2.6em;
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    background-color: rgb(255, 81, 0);
+
+    // ------------------------
+    //  Animation
+    // ------------------------
+    .wrapper-footer-home {
+      width: 100%;
+      position: relative;
+      .thankyou-animation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 40vh;
+        background-color: #eeedeb;
+        // background-color: #eeedeb;
+
+        .marquee {
+          // margin: 0 auto;
+          width: 100%; //makes this occupy the whole section 100%
+          white-space: nowrap;
+          overflow: hidden;
+          position: absolute;
+          font-size: 20vh;
+          span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 200s linear infinite;
+            animation-fill-mode: forwards;
+
+            //
+            font-family: "Roboto-Regular";
+
+            letter-spacing: 5px;
+            font-weight: 600;
+            color: rgb(24, 24, 24);
+            text-transform: uppercase;
+          }
+        }
+
+        //
+        .marquee2 span {
+          animation-delay: 100s;
+        }
+        @keyframes marquee {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(-100%, 0);
+          }
+        }
+      }
+    }
+    //
+    //
+  }
+}
+// ---------------
+// PHONE Landscape (all tiny mobile versions)
+@media screen and(max-width: 480px) {
+  .footer-home {
+    // padding: 0em 2.6em 0em 2.6em;
+    padding: 0;
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    background-color: sienna;
+
+    // ------------------------
+    //  Animation
+    // ------------------------
+    .wrapper-footer-home {
+      width: 100%;
+      position: relative;
+      padding: 0em 0 0em 0;
+      .thankyou-animation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+        height: 30vh;
+        background-color: #eeedeb;
+
+        .marquee {
+          // margin: 0 auto;
+          width: 100%; //makes this occupy the whole section 100%
+          white-space: nowrap;
+          overflow: hidden;
+          position: absolute;
+          font-size: 20vh;
+          span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 200s linear infinite;
+            animation-fill-mode: forwards;
+
+            //
+            font-family: "Roboto-Regular";
+
+            letter-spacing: 5px;
+            font-weight: 600;
+            color: rgb(24, 24, 24);
+            text-transform: uppercase;
+          }
+        }
+
+        //
+        .marquee2 span {
+          animation-delay: 100s;
+        }
+        @keyframes marquee {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(-100%, 0);
+          }
+        }
+      }
+    }
+    //
+    //
+  }
+}
+// ---------------
+// ---------------
+//
+// TABLET Portrait & Landscape
+@media screen and(min-width: 768px) and(max-width:1024px) {
+}
+
+// ---------------
+// TABLET Portrait
+@media screen and(min-width: 768px) {
+  .footer-home {
+    // padding: 0em 2.6em 0em 2.6em;
+    padding: 0;
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: rgb(11, 255, 32);
+    // ------------------------
+    //  Animation
+    // ------------------------
+    .wrapper-footer-home {
+      width: 100%;
+      position: relative;
+      .thankyou-animation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 40vh;
+        background-color: #eeedeb;
+
+        .marquee {
+          // margin: 0 auto;
+          width: 100%; //makes this occupy the whole section 100%
+          white-space: nowrap;
+          overflow: hidden;
+          position: absolute;
+          font-size: 23vw;
+          span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 200s linear infinite;
+            animation-fill-mode: forwards;
+
+            //
+            font-family: "Roboto-Regular";
+
+            letter-spacing: 5px;
+            font-weight: 600;
+            color: rgb(24, 24, 24);
+            text-transform: uppercase;
+          }
+        }
+
+        //
+        .marquee2 span {
+          animation-delay: 100s;
+        }
+        @keyframes marquee {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(-100%, 0);
+          }
+        }
+      }
+    }
+    //
+    //
+  }
+}
+// ---------------
+// TABLET Landscape
+@media screen and(min-width:1024px) {
+  .footer-home {
+    // padding: 0em 2.6em 0em 2.6em;
+    padding: 0;
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: rgb(11, 255, 32);
+    // ------------------------
+    //  Animation
+    // ------------------------
+    .wrapper-footer-home {
+      width: 100%;
+      position: relative;
+      .thankyou-animation {
+        .marquee {
+          // margin: 0 auto;
+          width: 100%; //makes this occupy the whole section 100%
+          white-space: nowrap;
+          overflow: hidden;
+          position: absolute;
+          font-size: 25vh;
+        }
+
+        //
+        .marquee2 span {
+          animation-delay: 100s;
+        }
+        @keyframes marquee {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(-100%, 0);
+          }
+        }
+      }
+    }
+    //
+    //
+  }
+}
+
+// ---------------
+// ---------------
+// Desktop
+@media screen and(min-width:1224px) {
+  .footer-home {
+    // padding: 0em 2.6em 0em 2.6em;
+    padding: 0;
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: rgb(11, 255, 32);
+    // ------------------------
+    //  Animation
+    // ------------------------
+    .wrapper-footer-home {
+      width: 100%;
+      position: relative;
+      .thankyou-animation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 30vh;
+        background-color: #eeedeb;
+
+        .marquee {
+          // margin: 0 auto;
+          width: 100%; //makes this occupy the whole section 100%
+          white-space: nowrap;
+          overflow: hidden;
+          position: absolute;
+          font-size: 18vh;
+          span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 200s linear infinite;
+            animation-fill-mode: forwards;
+
+            //
+            font-family: "Roboto-Regular";
+
+            letter-spacing: 5px;
+            font-weight: 600;
+            color: rgb(24, 24, 24);
+            text-transform: uppercase;
+          }
+        }
+
+        //
+        .marquee2 span {
+          animation-delay: 100s;
+        }
+        @keyframes marquee {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(-100%, 0);
+          }
+        }
+      }
+    }
+    //
+    //
+  }
+}
+// ---------------
+// LARGE Desktop
+@media screen and(min-width:1824px) {
+  .footer-home {
+    // padding: 0em 2.6em 0em 2.6em;
+    padding: 0 8em;
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: rgb(11, 255, 32);
+    // ------------------------
+    //  Animation
+    // ------------------------
+    .wrapper-footer-home {
+      width: 100%;
+      position: relative;
+      .thankyou-animation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 40vh;
+        background-color: #eeedeb;
+        font-size: 25vh;
+        .marquee {
+          // margin: 0 auto;
+          width: 100%; //makes this occupy the whole section 100%
+          white-space: nowrap;
+          overflow: hidden;
+          position: absolute;
+          span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 200s linear infinite;
+            animation-fill-mode: forwards;
+
+            //
+            font-family: "Roboto-Regular";
+            letter-spacing: 5px;
+            font-weight: 600;
+            color: rgb(24, 24, 24);
+            text-transform: uppercase;
+          }
+        }
+
+        //
+        .marquee2 span {
+          animation-delay: 100s;
+        }
+        @keyframes marquee {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(-100%, 0);
+          }
+        }
+      }
+    }
+    //
+    //
+  }
+}

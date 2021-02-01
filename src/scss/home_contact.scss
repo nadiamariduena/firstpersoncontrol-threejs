@@ -1,0 +1,606 @@
+// PHONE Portrait & Landscape
+@media screen and(min-width: 320px) and(max-width:480px) {
+}
+// ---------------
+// PHONE Portrait
+@media screen and(min-width: 320px) {
+  .container-contact {
+    background-color: #f5f5f5;
+    padding: 0em 2.6em;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .wrapper-contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        //
+        //
+        // -------------------------
+        //      scroll top
+        // -------------------------
+        //
+        //
+        .back-to-top {
+          width: 100%;
+          height: 40%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #f5f5f5;
+
+          h1 {
+            font-weight: 100;
+            font-family: "Roboto-Light";
+            color: #0f0f0f;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+
+            font-size: 4.2vh;
+            span {
+              margin: 0 5px;
+            }
+
+            &:hover {
+              color: rgb(143, 143, 143);
+              transition: 0.3s ease-in-out;
+            }
+          }
+        }
+        //-------------------------------
+        //
+        //-------------------------------
+        //
+        .cont-lnk-wrapper {
+          width: 100%;
+          height: 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          background-color: #f5f5f5;
+          .cont-links {
+            text-transform: uppercase;
+            font-family: "OpenSans-Regular";
+
+            h3 {
+              margin: 5px 0;
+              font-size: 2.8vh;
+              //  vh stays the same
+              color: #0f0f0f;
+              span {
+                margin: 0 5px;
+              }
+            }
+            ul {
+              list-style: none;
+              li {
+                font-size: 2.5vh;
+                color: #181818;
+                a {
+                  text-decoration: none;
+                  color: #181818;
+                  &:hover {
+                    color: #f7f7f7;
+                  }
+                }
+              }
+            }
+          }
+        }
+        //
+        //
+      }
+    }
+  }
+}
+// ---------------
+// PHONE Landscape
+@media screen and(max-width: 480px) {
+  .container-contact {
+    background-color: #f7f7f7;
+    padding: 0em 0em;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .wrapper-contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        //
+        //
+        // -------------------------
+        //      scroll top
+        // -------------------------
+        //
+        //
+        .back-to-top {
+          width: 100%;
+          height: 40%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          h1 {
+            font-weight: 100;
+            font-family: "Roboto-Light";
+            color: #0f0f0f;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+
+            font-size: 3.2vh;
+            span {
+              margin: 0 5px;
+            }
+
+            &:hover {
+              color: rgb(143, 143, 143);
+              transition: 0.3s ease-in-out;
+            }
+          }
+        }
+        //-------------------------------
+        //
+        //-------------------------------
+        //
+        .cont-lnk-wrapper {
+          width: 100%;
+          height: 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          background-color: #f7f7f7; //
+          .cont-links {
+            text-transform: uppercase;
+            font-family: "OpenSans-Regular";
+
+            h3 {
+              margin: 5px 0;
+              font-size: 2.4vh; //2.6vh = 19.13px
+              //  vh stays the same
+              color: #0f0f0f;
+              span {
+                margin: 0 5px;
+              }
+            }
+            ul {
+              list-style: none;
+              li {
+                font-size: 2.2vh;
+                // 2.4vh; = 17.663999999999998px
+                //     font-size: 2.3vh; 2.4vh = 17.66 px
+                color: #181818;
+                a {
+                  text-decoration: none;
+                  color: #181818;
+                  &:hover {
+                    color: rgb(143, 143, 143);
+                  }
+                }
+              }
+            }
+          }
+        }
+        //
+        //
+      }
+    }
+  }
+}
+// ---------------
+// ---------------
+//
+// TABLET Portrait & Landscape
+@media screen and(min-width: 768px) and(max-width:1024px) {
+}
+
+// ---------------
+// TABLET Portrait
+@media screen and(min-width: 768px) {
+  .container-contact {
+    background-color: #0a0a0a;
+    padding: 0em 6em;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    .contact {
+      .wrapper-contact {
+        width: 100%;
+        height: 100vh;
+        //
+        //
+        // -------------------------
+        //      scroll top
+        // -------------------------
+        //
+        //
+        .back-to-top {
+          width: 100%;
+          height: 40%;
+          background-color: #0a0a0a;
+          h1 {
+            font-weight: 100;
+            font-family: "Roboto-Light";
+            color: #eeedeb;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+
+            font-size: 4.2vh;
+            span {
+              margin: 0 5px;
+            }
+
+            &:hover {
+              color: rgb(209, 209, 209);
+              transition: 0.3s ease-in-out;
+            }
+          }
+        }
+        //-------------------------------
+        //
+        //-------------------------------
+        //
+        .cont-lnk-wrapper {
+          width: 100%;
+          height: 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          background-color: #0a0a0a;
+          .cont-links {
+            text-transform: uppercase;
+            font-family: "OpenSans-Regular";
+
+            h3 {
+              margin: 5px 0;
+              font-size: 2.8vh; //2.6vh = 19.13px
+              //  vh stays the same
+              color: #ebebeb;
+              span {
+                margin: 0 5px;
+              }
+            }
+            ul {
+              list-style: none;
+              li {
+                font-size: 2.5vh; //2.4vh = 17.66 px
+                color: #eeedeb9f;
+                a {
+                  text-decoration: none;
+                  color: #eeedeb9f;
+                  &:hover {
+                    color: #eeedebaf;
+                  }
+                }
+              }
+            }
+          }
+        }
+        //
+        //
+      }
+    }
+  }
+}
+// ---------------
+// TABLET Landscape
+@media screen and(min-width:1024px) {
+  .container-contact {
+    background-color: #0a0a0a;
+    padding: 0em 6em;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    .contact {
+      .wrapper-contact {
+        width: 100%;
+        height: 100vh;
+        //
+        //
+        // -------------------------
+        //      scroll top
+        // -------------------------
+        //
+        //
+        .back-to-top {
+          width: 100%;
+          height: 40%;
+          background-color: #0a0a0a;
+          h1 {
+            font-weight: 100;
+            font-family: "Roboto-Light";
+            color: #eeedeb;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+
+            font-size: 4.2vh;
+            span {
+              margin: 0 5px;
+            }
+
+            &:hover {
+              color: rgb(209, 209, 209);
+              transition: 0.3s ease-in-out;
+            }
+          }
+        }
+        //-------------------------------
+        //
+        //-------------------------------
+        //
+        .cont-lnk-wrapper {
+          width: 100%;
+          height: 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          background-color: #0a0a0a;
+          .cont-links {
+            text-transform: uppercase;
+            font-family: "OpenSans-Regular";
+
+            h3 {
+              margin: 5px 0;
+              font-size: 2.8vh; //2.6vh = 19.13px
+              //  vh stays the same
+              color: #ebebeb;
+              span {
+                margin: 0 5px;
+              }
+            }
+            ul {
+              list-style: none;
+              li {
+                font-size: 2.6vh; //2.4vh = 17.66 px
+                color: #eeedeb9f;
+                a {
+                  text-decoration: none;
+                  color: #eeedeb9f;
+                  &:hover {
+                    color: #eeedebaf;
+                  }
+                }
+              }
+            }
+          }
+        }
+        //
+        //
+      }
+    }
+  }
+}
+
+// ---------------
+// ---------------
+// Desktop
+@media screen and(min-width:1224px) {
+  .container-contact {
+    background-color: #0a0a0a;
+    padding: 0em 0em;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #0a0a0a;
+      .wrapper-contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 85%;
+        height: 100vh;
+        //
+        //
+        // -------------------------
+        //      scroll top
+        // -------------------------
+        //
+        //
+        .back-to-top {
+          background-color: #0a0a0a;
+          h1 {
+            font-size: 4.5vh;
+            // 4.5vh; = 33.12px
+            //3.2vh = 23.55px
+            color: #ebebeb;
+            span {
+              margin: 0 5px;
+            }
+            &:hover {
+              color: rgb(209, 209, 209);
+              transition: 0.3s ease-in-out;
+            }
+          }
+        }
+        //-------------------------------
+        //
+        //-------------------------------
+        //
+        .cont-lnk-wrapper {
+          width: 100%;
+          height: 60%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          background-color: #0a0a0a;
+          .cont-links {
+            text-transform: uppercase;
+            font-family: "OpenSans-Regular";
+
+            h3 {
+              margin: 5px 0;
+              font-size: 2.6vh; //2.6vh = 19.13px
+              //  vh stays the same
+              color: #e0e0e0;
+              span {
+                margin: 0 5px;
+              }
+            }
+            ul {
+              list-style: none;
+              li {
+                font-size: 2.3vh; //2.4vh = 17.66 px
+                color: #eeedeb9f;
+                a {
+                  text-decoration: none;
+                  color: #eeedeb9f;
+                  &:hover {
+                    color: #eeedebaf;
+                  }
+                }
+              }
+            }
+          }
+        }
+        //
+        //
+      }
+    }
+  }
+}
+// ---------------
+// LARGE Desktop
+@media screen and(min-width:1824px) {
+  .container-contact {
+    // padding: 0em 2.6em 0em 2.6em;
+    padding: 0 8em;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #0a0a0a;
+      .wrapper-contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        //
+        //
+        // -------------------------
+        //      scroll top
+        // -------------------------
+        //
+        //
+        .back-to-top {
+          background-color: #0a0a0a;
+          h1 {
+            font-size: 4.6vh;
+            // 4.5vh; = 33.12px
+            //3.2vh = 23.55px
+            span {
+              margin: 0 5px;
+            }
+            &:hover {
+              color: rgb(209, 209, 209);
+              transition: 0.3s ease-in-out;
+            }
+          }
+        }
+        //-------------------------------
+        //
+        //-------------------------------
+        //
+        .cont-lnk-wrapper {
+          width: 100%;
+          height: 60%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          background-color: #0a0a0a;
+          .cont-links {
+            text-transform: uppercase;
+            font-family: "OpenSans-Regular";
+
+            h3 {
+              margin: 5px 0;
+              font-size: 2.8vh; //2.6vh = 19.13px
+              //  vh stays the same
+              color: #ebebeb;
+              span {
+                margin: 0 5px;
+              }
+            }
+            ul {
+              list-style: none;
+              li {
+                font-size: 2.6vh; //2.4vh = 17.66 px
+                color: #eeedeb9f;
+                a {
+                  text-decoration: none;
+                  color: #eeedeb9f;
+                  &:hover {
+                    color: #eeedebaf;
+                  }
+                }
+              }
+            }
+          }
+        }
+        //
+        //
+      }
+    }
+  }
+}

@@ -1,70 +1,136 @@
-# Getting Started with Create React App
+# FIRST PERSON CONTROL 👾
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ <br>
+  <br>
+   <br>
+    <br>
 
-## Available Scripts
+#### START by importing the code from the public folder
 
-In the project directory, you can run:
+```javascript
+import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls";
+```
 
-### `npm start`
+#### COMMON ERROR
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Since I had no idea how to start with this, I presumed I could simply import the folders from the node modules like I did before, but after watching the tutorial I realized it wasn't required.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+##### the error
 
-### `npm test`
+```javascript
+    ./src/components/3dScenes/TropicFirstPerson.js
+Attempted import error: 'FirstPersonControls' is not exported from 'three' (imported as 'THREE').
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##### the solution
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```javascript
+//
+// instead of this:
+this.cameraControlsFirstPerson = new THREE.FirstPersonControls();
+//
+//
+//
+//
+//add this: (remove the THREE)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+this.cameraControlsFirstPerson = new FirstPersonControls();
+```
 
-### `npm run eject`
+  <br>
+  <br>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# 🌵
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### NOW REPLACE the old settings from the the purple rain camera for the following:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```javascript
+this.camera.position.x = 40;
+this.camera.position.y = 40;
+this.camera.position.z = 40; // origin: 50
+//
+this.camera.lookAt(this.scene.position); //we are looking at the center of the scene(depends of what yoou have in the camera position)
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   <br>
+    <br>
 
-## Learn More
+### HIDE the old Orbits controls and the zoom distance
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+this.cameraControlsFirstPerson = new FirstPersonControls(
+  this.camera,
+  this.eleModelBlOne
+);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+this.cameraControlsFirstPerson.lookSpeed = 0.05;
+this.cameraControlsFirstPerson.movementSpeed = 10;
+//
 
-### Code Splitting
+//
+//
+//-------------- before the first person controls , we had this:
+// OrbitControls allow a camera to orbit around the object
+// https://threejs.org/docs/#examples/controls/OrbitControls
+// this.controls = new OrbitControls(this.camera, this.eleModelBlOne);
+//  ------------- **
+//
+//
+//
+//  to limit zoom distance so that the User
+//  dont zoom out of the specified range
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+// this.controls.maxDistance = 70;
+```
 
-### Analyzing the Bundle Size
+##### DELETE most of the models (leave just 1)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<br>
+<br>
 
-### Making a Progressive Web App
+### Now add the delta to make it work
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- I still dont get what is the concrete logic of the delta, i know that here it s updating something and causing a loop like, but I am confused about the "why " of its use.I just know that if you use the delta with the clock, your animation will never stop from doing what you told it to do, ex: if you want an object to move from top to bottom without ending and with a certain tempo, it will do it.
 
-### Advanced Configuration
+```javascript
+//
+    //
+    // ------------------ clock
+    this.stop = 0;
+    this.stepy = 0;
+    this.clock = new THREE.Clock();
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    //
+    //
+    //
+  };
 
-### Deployment
+  // 3
+  startAnimationLoop = () => {
+    this.stop += 0.005;
+    this.stepy += 0.00005;
+    this.delta = this.clock.getDelta();
+    //
+    //
+    this.cameraControlsFirstPerson.update(this.delta);
+    //
+    this.renderer.render(this.scene, this.camera);
+    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+  };
+  /*
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### First result
+
+- Here (in the image) I am clicking to get near the red object.
+
+- to turn, i just have to mouse over the direction i want.
+
+- but its not nice to test it on this object, tomorrow i will create another model where it will be much more easier to check the progress.
+
+[<img src="./src/images/preview_first-setp.gif"/>]()

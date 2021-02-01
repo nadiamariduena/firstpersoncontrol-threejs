@@ -1,0 +1,114 @@
+// PHONE Portrait & Landscape
+@media screen and(min-width: 320px) and(max-width:480px) {
+  //
+}
+// ---------------
+// PHONE Portrait (all big mobile versions)
+@media screen and(min-width: 320px) {
+  //
+}
+// ---------------
+// PHONE Landscape (all tiny mobile versions)
+@media screen and(max-width: 480px) {
+}
+// ---------------
+// ---------------
+//
+// TABLET Portrait & Landscape
+@media screen and(min-width: 768px) and(max-width:1024px) {
+  //
+}
+
+// ---------------
+// TABLET Portrait
+@media screen and(min-width: 768px) {
+}
+// ---------------
+// TABLET Landscape
+@media screen and(min-width:1024px) {
+}
+
+// ---------------
+// ---------------
+// Desktop  ***********
+@media screen and(min-width:1224px) {
+  .wrapper-portfolio {
+    padding: 20em 15em 15em 15em;
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    // the auto fit will make it adaptable to the device.
+    // the minmax means that the box will always keep that size, unless i change it.
+    // if you dont add the fraction, leaving alone the 250px, the box will occupy the 100% width, but using the fraction will put it in 2 rows.
+    background-color: #f3f3f3;//
+    .container-card {
+      .quote {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        background-color: #f3f3f3;
+        padding: 1.5em 0em;
+        overflow: hidden;
+        h2 {
+          font-weight: 100;
+          font-family: "MuliLight";
+          font-size: 2vh;
+          text-transform: uppercase;
+        }
+        .img-container {
+          filter: grayscale(100%);
+          background-color: rgb(158, 116, 116);
+          width: 100%;
+          margin: 2em 0;
+          img {
+            width: 100%;
+            min-height: auto;
+            object-fit: cover;
+          }
+        }
+      }
+      //
+      .portfolio-quote {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 90%;
+        h2 {
+          text-align: left;
+          padding: 0vw;
+          font-size: 2.5vh;
+          font-weight: 500;
+          padding: 1.5vh 0vw;
+          letter-spacing: -1px;
+          font-family: "Arimo-Regular";
+        }
+        // ----
+        p {
+          padding: 1.5vh 0vw;
+          width: 95%;
+
+          font-size: 2.6vh;
+        }
+        overflow: hidden;
+        h4 {
+          padding: 1.5vh 0vw;
+          font-weight: 100;
+          font-family: "MuliLight";
+          font-size: 2vh;
+          text-transform: uppercase;
+        }
+      }
+      //
+      //
+    }
+  }
+}
+// ---------------
+// LARGE Desktop
+@media screen and(min-width:1824px) {
+}
+//
+//

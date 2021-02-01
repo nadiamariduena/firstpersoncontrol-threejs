@@ -1,0 +1,24 @@
+.img-container {
+  width: 700px;
+  height: 420px;
+  overflow: hidden;
+  position: relative;
+  margin: 400px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(139, 19, 19);
+  &:nth-child(1) {
+    margin-top: 200px;
+  }
+  &:last-child {
+    margin-bottom: 200px;
+  }
+  @media (max-width: 480px) {
+    width: 95%;
+  }
+  img {
+    width: 100%;
+    position: absolute;
+  }
+}
