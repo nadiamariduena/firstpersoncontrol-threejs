@@ -5,7 +5,7 @@
    <br>
     <br>
 
-#### START by importing the code from the public folder
+#### START by importing the code from the node modules, just like in the past tests:
 
 ```javascript
 import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls";
