@@ -1142,6 +1142,9 @@ this.floorGeometry = this.floorGeometry.toNonIndexed();
 position = this.floorGeometry.attributes.position;
 ```
 
+<br>
+<br>
+
 ## FLOOR COLORS
 
 ```javascript
@@ -1174,7 +1177,9 @@ this.floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
 //
 ```
 
-### Add the floor vertex and the floor colors = floor, to the scene
+<br>
+
+#### Add the floor vertex and the floor colors = floor, to the scene
 
 ```javascript
 //
@@ -1185,3 +1190,87 @@ this.scene.add(this.floor);
 ```
 
 [<img src="./src/images/floor-colors.gif"/>]()
+
+<br>
+<br>
+<br>
+
+# 🦒
+
+## OBJECTS
+
+- I was asking myself about **.toNonIndexed** , apparently it **creates a normal Geometry** and turn it into a **non-indexed** geometry. **Each face has now unique vertices.**
+
+```javascript
+// objects
+// ensure each face has unique vertices
+this.boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
+// https://stackoverflow.com/questions/49609220/threejs-creating-a-grid-from-triangles
+```
+
+<br>
+
+### WHAT IS vertexColors?
+
+- The vertexColors **push a colour per vertex**
+
+[assign different colors to each vertex in a geometry](https://stackoverflow.com/questions/10330342/threejs-assign-different-colors-to-each-vertex-in-a-geometry)
+
+<br>
+
+```javascript
+//
+// ---------
+// BOXES GEOMETRY
+// ---------
+// .toNonIndexed();  ensure each face has unique vertices
+this.boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
+//
+position = this.boxGeometry.attributes.position;
+//--------------
+// colors Box
+//--------------
+const colorsBox = [];
+//
+for (let i = 0, l = position.count; i < l; i++) {
+  this.color.setHSL(
+    Math.random() * 0.3 + 0.5,
+    0.75,
+    Math.random() * 0.25 + 0.75
+  );
+  colorsBox.push(this.color.r, this.color.g, this.color.b);
+}
+//
+this.boxGeometry.setAttribute(
+  "color",
+  new THREE.Float32BufferAttribute(colorsBox, 3)
+);
+//
+// the 500 correspond to the amount of boxes
+// the material is MeshPhong, apparently its a good material to cast shadows
+for (let i = 0; i < 500; i++) {
+  const boxMaterial = new THREE.MeshPhongMaterial({
+    specular: 0xffffff,
+    flatShading: true,
+    vertexColors: true,
+  });
+  boxMaterial.color.setHSL(
+    Math.random() * 0.2 + 0.5,
+    0.75,
+    Math.random() * 0.25 + 0.75
+  );
+  // ---------
+  // BOX
+  // ---------
+  const box = new THREE.Mesh(this.boxGeometry, boxMaterial);
+  box.position.x = Math.floor(Math.random() * 10 - 10) * 20;
+  box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
+  box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
+  //
+  //
+  //                ***
+  //  Here you add to the scene all the ABOVE
+  this.scene.add(box);
+  this.objects.push(box);
+}
+```

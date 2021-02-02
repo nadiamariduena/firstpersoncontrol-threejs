@@ -203,7 +203,7 @@ class TropicalVoid extends Component {
       this.vertex.z += Math.random() * 20 - 10;
       position.setXYZ(i, this.vertex.x, this.vertex.y, this.vertex.z);
     }
-    // ensure each face has unique vertices
+    // ensure each face has unique vertices  **
     this.floorGeometry = this.floorGeometry.toNonIndexed();
     //
     position = this.floorGeometry.attributes.position;
@@ -236,7 +236,61 @@ class TropicalVoid extends Component {
     // ------------ Here you add to the scene all the ABOVE -----
     this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
     this.scene.add(this.floor);
-    // ------------ -------------------------- ------------ -----
+    //
+    //
+    // ---------
+    // BOXES GEOMETRY
+    // ---------
+    // .toNonIndexed();  ensure each face has unique vertices
+    this.boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
+    //
+    position = this.boxGeometry.attributes.position;
+    //--------------
+    // colors Box
+    //--------------
+    const colorsBox = [];
+    //
+    for (let i = 0, l = position.count; i < l; i++) {
+      this.color.setHSL(
+        Math.random() * 0.3 + 0.5,
+        0.75,
+        Math.random() * 0.25 + 0.75
+      );
+      colorsBox.push(this.color.r, this.color.g, this.color.b);
+    }
+    //
+    this.boxGeometry.setAttribute(
+      "color",
+      new THREE.Float32BufferAttribute(colorsBox, 3)
+    );
+    //
+    // the 500 correspond to the amount of boxes
+    // the material is MeshPhong, apparently its a good material to cast shadows
+    for (let i = 0; i < 500; i++) {
+      const boxMaterial = new THREE.MeshPhongMaterial({
+        specular: 0xffffff,
+        flatShading: true,
+        vertexColors: true,
+        // push a colour per vertex
+      });
+      boxMaterial.color.setHSL(
+        Math.random() * 0.2 + 0.5,
+        0.75,
+        Math.random() * 0.25 + 0.75
+      );
+      // ---------
+      // BOX
+      // ---------
+      const box = new THREE.Mesh(this.boxGeometry, boxMaterial);
+      box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
+      box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
+      box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
+
+      this.scene.add(box);
+      this.objects.push(box);
+    }
+
+    //
     //
     //
   };
