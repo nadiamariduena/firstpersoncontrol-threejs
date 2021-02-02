@@ -1274,3 +1274,5 @@ for (let i = 0; i < 500; i++) {
   this.objects.push(box);
 }
 ```
+
+[<img src="./src/images/math-random-boxes.gif"/>]()
