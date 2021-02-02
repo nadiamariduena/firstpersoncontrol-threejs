@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as THREE from "three";
 //
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
- 
+
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 //
@@ -29,6 +29,7 @@ class TropicalVoid extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowResize);
     window.cancelAnimationFrame(this.requestID);
+
     this.controls.dispose();
   }
   /*

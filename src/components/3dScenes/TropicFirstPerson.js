@@ -1,31 +1,47 @@
 import React, { Component } from "react";
 import * as THREE from "three";
-//
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls";
-// import { FirstPersonControls } from "firstpersoncontrols.js";
-//
-//
-
+import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 //
 //
-
 const style = {
   height: 600, // we can control scene size by setting container dimensions
 };
 //
+//
+//
+const objects = [];
 
+let raycaster;
+
+let moveForward = false;
+let moveBackward = false;
+let moveLeft = false;
+let moveRight = false;
+let canJump = false;
+
+let prevTime = performance.now();
+const velocity = new THREE.Vector3();
+const direction = new THREE.Vector3();
+const vertex = new THREE.Vector3();
+const color = new THREE.Color();
 //
 //
+/*
+
+
+
+
+
+
+  */
 class TropicalVoid extends Component {
   componentDidMount() {
     this.sceneSetup();
     this.addCustomSceneObjects();
     this.startAnimationLoop();
-
     //
     window.addEventListener("resize", this.handleWindowResize);
   }
@@ -34,12 +50,12 @@ class TropicalVoid extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowResize);
     window.cancelAnimationFrame(this.requestID);
-    this.controls.dispose();
+    // right now with the first person control,
+    // we dont need this dispose as it s already included inside the three folder, check the read me, in the
+    // beginning you will find a copy of the code inside the threejs that I am using.
+    // this.controls.dispose();
   }
   /*
-
-
-
 
 
 
@@ -52,31 +68,15 @@ class TropicalVoid extends Component {
     const width = this.eleModelBlOne.clientWidth;
     const height = this.eleModelBlOne.clientHeight;
     //
-
     this.scene = new THREE.Scene();
-    //
-    //
+    // this.scene.background = new THREE.Color(0xffffff);
     this.camera = new THREE.PerspectiveCamera(
-      //
-      65, // fov = field of view
-      width / height, // aspect ratio
-      0.1, // near plane
-      1000 // far plane
+      75,
+      window.innerWidth / window.innerHeight,
+      1,
+      1000
     );
-    //----------------------------------
-    //           AXES HELPER
-    //----------------------------------
-    // This block of code is just to help you to see where you are at in the scene
-    // if i add the this.axes, it s going to clash with the dispose inside the
-    //
-    // const axes = new THREE.AxesHelper(50); //origin 50
-    // this.scene.add(axes);
-    //
-    this.camera.position.x = 40;
-    this.camera.position.y = 40;
-    this.camera.position.z = 40; // origin: 50
-    //
-    this.camera.lookAt(this.scene.position); //we are looking at the center of the scene(depends of what yoou have in the camera position)
+    this.camera.position.y = 10;
 
     //
     //
@@ -89,48 +89,7 @@ class TropicalVoid extends Component {
     //
     //
     //
-    /*
-    THIS ERROR 
-    
-    ./src/components/3dScenes/TropicFirstPerson.js
-Attempted import error: 'FirstPersonControls' is not exported from 'three' (imported as 'THREE').
 
-THE SOLUTION:
-
-instead of this:
- this.cameraControlsFirstPerson = new THREE.FirstPersonControls(
-   add this: (remove the THREE)
-
-    this.cameraControlsFirstPerson = new FirstPersonControls(
-
-    */
-    //
-
-    this.cameraControlsFirstPerson = new FirstPersonControls(
-      this.camera,
-      this.eleModelBlOne
-    );
-
-    this.cameraControlsFirstPerson.lookSpeed = 0.05;
-    this.cameraControlsFirstPerson.movementSpeed = 10;
-    //
-
-    //
-    //
-    //-------------- before the first person controls , we had this:
-    // OrbitControls allow a camera to orbit around the object
-    // https://threejs.org/docs/#examples/controls/OrbitControls
-    // this.controls = new OrbitControls(this.camera, this.eleModelBlOne);
-    //  ------------- **
-    //
-    //
-    //
-    //  to limit zoom distance so that the User
-    //  dont zoom out of the specified range
-
-    // this.controls.maxDistance = 70;
-
-    //
     //
     //
     this.renderer.setSize(width, height);
@@ -139,10 +98,32 @@ instead of this:
     this.renderer.shadowMap.enabled = true;
     // here you append it to the jsx
     this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
+
+    //
+    //
+    //
+    this.controls = new PointerLockControls(this.camera, this.eleModelBlOne);
+    //
+    //
+    //
+    //
+    this.blocker = document.getElementById("blocker");
+    this.instructions = document.getElementById("instructions");
+
+    this.instructions.addEventListener("click", function () {
+      this.controls.lock();
+    });
+
+    this.controls.addEventListener("lock", function () {
+      this.instructions.style.display = "none";
+      this.blocker.style.display = "none";
+    });
+
+    this.controls.addEventListener("unlock", function () {
+      this.blocker.style.display = "block";
+      this.instructions.style.display = "";
+    });
   };
-  //
-  //
-  //
   //
 
   /*
@@ -167,21 +148,21 @@ instead of this:
     //
     // terrain_grosso_moon.-Normalize-4_.glb
     // 49,4Kb
-    loader.load("./models/columns-rosso/terrain_grosso_columns.glb", (gltf) => {
+    loader.load("./models/palmera-sun-palmeras2_retoucheeeggg.glb", (gltf) => {
       this.meshy = gltf.scene;
 
       gltf.scene.traverse((model) => {
         if (model.material) model.material.metalness = 0.08;
 
         model.receiveShadow = true;
-        model.scale.set(0.8, 0.8, 0.8);
+        model.scale.set(2, 2, 2);
         // model.rotation.y = 1;
         // model.rotation.x += -0;
         // model.rotation.y += 0;
         //
-        model.position.x = 20;
-        model.position.y = -35;
-        model.position.z = -2;
+        model.position.x = 0;
+        model.position.y = -0.4;
+        model.position.z = 0;
         //
         //
         //
@@ -189,6 +170,25 @@ instead of this:
 
       this.scene.add(gltf.scene);
     });
+    //
+    // Add PLANE  w , h , segments
+    const planeGeometry = new THREE.PlaneGeometry(500, 500, 100, 55);
+    const planeMaterial = new THREE.MeshLambertMaterial({
+      color: 0xdddddd,
+      wireframe: true,
+    });
+    // var planeMaterial = new THREE.MeshLambertMaterial((color: 0xff0000));
+    this.plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    //
+    this.plane.rotation.x = -0.5 * Math.PI;
+    this.plane.position.y = -1;
+    //
+    //
+    // *** RECEIVE SHADOW
+    // related to the light and the shadow
+    this.plane.receiveShadow = true;
+    this.scene.add(this.plane);
+    //
     //
 
     /*
@@ -260,10 +260,6 @@ instead of this:
     //
     //
     // ------------------ clock
-    this.stop = 0;
-    this.stepy = 0;
-
-    this.clock = new THREE.Clock();
 
     //
     //
@@ -272,13 +268,6 @@ instead of this:
 
   // 3
   startAnimationLoop = () => {
-    this.stop += 0.005;
-
-    this.stepy += 0.00005;
-    this.delta = this.clock.getDelta();
-    //
-    //
-    this.cameraControlsFirstPerson.update(this.delta);
     //
     this.renderer.render(this.scene, this.camera);
     this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
