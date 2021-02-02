@@ -908,6 +908,7 @@ class TropicalVoid extends Component {
 
 export default TropicalVoid;
 ```
+
 <br>
 <br>
 <br>
@@ -917,3 +918,180 @@ export default TropicalVoid;
 # THE NEW CODE
 
 - I FOUND this example while i was looking for solutions related to the DRACO converter, what i like is the possibility of jump into the objects :) 🏃
+
+<br>
+<br>
+
+##### I TRIED TO ADD THE BLOCKER but it didnt work because I am trying to add an event listener to threejs "the scene" , it would have been easy to just have some div to make the connection to but for now i prefer to pass
+
+- So this is the code that didnt work, it serves to add the overlay of the scene, where you explain the commands before playing
+
+```javascript
+this.blocker = document.getElementById("blocker");
+this.instructions = document.getElementById("instructions");
+
+this.instructions.addEventListener("click", (e) => {
+  this.controls.lock();
+});
+
+this.controls.addEventListener("lock", (e) => {
+  this.instructions.style.display = "none";
+  this.blocker.style.display = "none";
+});
+
+this.controls.addEventListener("unlock", (e) => {
+  this.blocker.style.display = "block";
+  this.instructions.style.display = "";
+});
+
+this.scene.add(this.controls.getObject());
+//
+//
+//
+```
+
+#### THE STYLES connected to it
+
+```scss
+//  THE STYLES connected to it
+#blocker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#instructions {
+  width: 100%;
+  height: 100%;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  box-orient: horizontal;
+
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
+
+  color: #ffffff;
+  text-align: center;
+  font-family: Arial;
+  font-size: 14px;
+  line-height: 24px;
+
+  cursor: pointer;
+}
+// https: ; //linguinecode.com/post/react-onclick-event-vs-js-addeventlistener
+```
+
+<br>
+<br>
+
+#### EXAMPLE of what i had in mind , but we cannot do it in this one
+
+- I used this approach for the dropdown menu
+
+[event listener react - dropdown GSAP menu](https://github.com/nadiamariduena/nadiamariduena-portfolio/blob/master/src/components/navbar/Navigation.js)
+
+```javascript
+class App extends React.Component {
+  handleClick = () => console.log("Hi there");
+
+  render() {
+    return <button onClick={this.handleClick}>Say something</button>;
+  }
+}
+```
+
+<br>
+<br>
+
+# 🦕
+
+#### LETS CONTINUE ... I will check it later
+
+- LETS CONTINUE with the game commands (to see if it works)
+
+<br>
+
+- I DECIDED to try this code just because of the jump :)
+
+[<img src="./src/images/jump-vanhalen.gif"/>](https://youtu.be/5EqWN4fT79s)
+
+<br>
+
+```javascript
+const onKeyDown = function (event) {
+  switch (event.code) {
+    case "ArrowUp":
+    case "KeyW":
+      moveForward = true;
+      break;
+
+    case "ArrowLeft":
+    case "KeyA":
+      moveLeft = true;
+      break;
+
+    case "ArrowDown":
+    case "KeyS":
+      moveBackward = true;
+      break;
+
+    case "ArrowRight":
+    case "KeyD":
+      moveRight = true;
+      break;
+
+    //  ---------
+    //  JUMP
+    //  ---------
+    case "Space":
+      if (canJump === true) velocity.y += 350;
+      canJump = false;
+      break;
+  }
+};
+
+const onKeyUp = function (event) {
+  switch (event.code) {
+    case "ArrowUp":
+    case "KeyW":
+      moveForward = false;
+      break;
+
+    case "ArrowLeft":
+    case "KeyA":
+      moveLeft = false;
+      break;
+
+    case "ArrowDown":
+    case "KeyS":
+      moveBackward = false;
+      break;
+
+    case "ArrowRight":
+    case "KeyD":
+      moveRight = false;
+      break;
+  }
+};
+```
+
+#### UNTIL NOW _no_ ERRORS just a WARNING
+
+```javascript
+  Line 117:7:  Expected a default case                default-case
+  Line 149:7:  Expected a default case                default-case
+
+```
+
+[<img src="./src/images/commands_fine.gif"/>]()

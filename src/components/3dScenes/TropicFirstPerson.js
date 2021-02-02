@@ -12,21 +12,7 @@ const style = {
 //
 //
 //
-const objects = [];
 
-let raycaster;
-
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-let canJump = false;
-
-let prevTime = performance.now();
-const velocity = new THREE.Vector3();
-const direction = new THREE.Vector3();
-const vertex = new THREE.Vector3();
-const color = new THREE.Color();
 //
 //
 /*
@@ -107,22 +93,91 @@ class TropicalVoid extends Component {
     //
     //
     //
-    this.blocker = document.getElementById("blocker");
-    this.instructions = document.getElementById("instructions");
+    this.objects = [];
 
-    this.instructions.addEventListener("click", function () {
-      this.controls.lock();
-    });
+    let raycaster;
 
-    this.controls.addEventListener("lock", function () {
-      this.instructions.style.display = "none";
-      this.blocker.style.display = "none";
-    });
+    this.moveForward = false;
+    this.moveBackward = false;
+    this.moveLeft = false;
+    this.moveRight = false;
+    this.canJump = false;
 
-    this.controls.addEventListener("unlock", function () {
-      this.blocker.style.display = "block";
-      this.instructions.style.display = "";
-    });
+    this.prevTime = performance.now();
+    this.velocity = new THREE.Vector3();
+    this.direction = new THREE.Vector3();
+    this.vertex = new THREE.Vector3();
+    this.color = new THREE.Color();
+    //
+    //
+    //
+    //
+
+    const onKeyDown = function (event) {
+      switch (event.code) {
+        case "ArrowUp":
+        case "KeyW":
+          this.moveForward = true;
+          break;
+
+        case "ArrowLeft":
+        case "KeyA":
+          this.moveLeft = true;
+          break;
+
+        case "ArrowDown":
+        case "KeyS":
+          this.moveBackward = true;
+          break;
+
+        case "ArrowRight":
+        case "KeyD":
+          this.moveRight = true;
+          break;
+
+        //  ---------
+        //  JUMP
+        //  ---------
+        case "Space":
+          if (this.canJump === true) this.velocity.y += 350;
+          this.canJump = false;
+          break;
+      }
+    };
+
+    const onKeyUp = function (event) {
+      switch (event.code) {
+        case "ArrowUp":
+        case "KeyW":
+          this.moveForward = false;
+          break;
+
+        case "ArrowLeft":
+        case "KeyA":
+          this.moveLeft = false;
+          break;
+
+        case "ArrowDown":
+        case "KeyS":
+          this.moveBackward = false;
+          break;
+
+        case "ArrowRight":
+        case "KeyD":
+          this.moveRight = false;
+          break;
+      }
+    };
+
+    //
+    //
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("keyup", onKeyUp);
+    //
+
+    //
+    //
+    //
   };
   //
 
