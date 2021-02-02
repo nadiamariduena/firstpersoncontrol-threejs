@@ -92,9 +92,10 @@ class TropicalVoid extends Component {
     //
     //
     //
-    //
+    //----------------
     this.objects = [];
-
+    //----------------
+    //
     let raycaster;
 
     this.moveForward = false;
@@ -168,7 +169,6 @@ class TropicalVoid extends Component {
           break;
       }
     };
-
     //
     //
     document.addEventListener("keydown", onKeyDown);
@@ -176,6 +176,67 @@ class TropicalVoid extends Component {
     //
 
     //
+    this.raycaster = new THREE.Raycaster(
+      new THREE.Vector3(),
+      new THREE.Vector3(0, -1, 0),
+      0,
+      10
+    );
+    //
+    // ---------------
+    // floor Geometry
+    // ---------------
+
+    this.floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+    this.floorGeometry.rotateX(-Math.PI / 2);
+    //
+    //-------------------
+    // vertex displacement
+    //-------------------
+    //
+    let position = this.floorGeometry.attributes.position;
+    //
+    for (let i = 0, l = position.count; i < l; i++) {
+      this.vertex.fromBufferAttribute(position, i);
+      this.vertex.x += Math.random() * 20 - 10;
+      this.vertex.y += Math.random() * 2;
+      this.vertex.z += Math.random() * 20 - 10;
+      position.setXYZ(i, this.vertex.x, this.vertex.y, this.vertex.z);
+    }
+    // ensure each face has unique vertices
+    this.floorGeometry = this.floorGeometry.toNonIndexed();
+    //
+    position = this.floorGeometry.attributes.position;
+    //
+    //--------------
+    // colorsFloor
+    //--------------
+    const colorsFloor = [];
+    //
+    // what makes the triangles of the floor have different colors
+    for (let i = 0, l = position.count; i < l; i++) {
+      // here you are generating random colors HSL
+      this.color.setHSL(
+        Math.random() * 0.3 + 0.5,
+        0.75,
+        Math.random() * 0.25 + 0.75
+      );
+      colorsFloor.push(this.color.r, this.color.g, this.color.b);
+    }
+    //
+    this.floorGeometry.setAttribute(
+      "color",
+      new THREE.Float32BufferAttribute(colorsFloor, 3)
+    );
+    //
+    //
+    this.floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
+    //
+    //
+    // ------------ Here you add to the scene all the ABOVE -----
+    this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
+    this.scene.add(this.floor);
+    // ------------ -------------------------- ------------ -----
     //
     //
   };
@@ -226,6 +287,7 @@ class TropicalVoid extends Component {
       this.scene.add(gltf.scene);
     });
     //
+    /*
     // Add PLANE  w , h , segments
     const planeGeometry = new THREE.PlaneGeometry(500, 500, 100, 55);
     const planeMaterial = new THREE.MeshLambertMaterial({
@@ -244,6 +306,7 @@ class TropicalVoid extends Component {
     this.plane.receiveShadow = true;
     this.scene.add(this.plane);
     //
+    */
     //
 
     /*

@@ -1091,7 +1091,97 @@ const onKeyUp = function (event) {
 ```javascript
   Line 117:7:  Expected a default case                default-case
   Line 149:7:  Expected a default case                default-case
-
+  //
+  117       switch (event.code) {
+    149    switch (event.code) {
+    //
+    //
+    //
+  // READ MORE:
+  // https://stackoverflow.com/questions/56084810/using-break-after-default-in-switch-statement-when-default-not-at-end
+  //
+// https://github.com/immerjs/immer/issues/91
 ```
 
 [<img src="./src/images/commands_fine.gif"/>]()
+
+<br>
+<br>
+<br>
+
+# 🦏
+
+## FLOOR GEOMETRY
+
+- I think it s interesting to rediscover the uses of **Math random for geometries**
+
+```javascript
+// ---------------
+// floor Geometry
+// ---------------
+
+this.floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+this.floorGeometry.rotateX(-Math.PI / 2);
+//
+//-------------------
+// vertex displacement
+//-------------------
+//
+let position = this.floorGeometry.attributes.position;
+//
+for (let i = 0, l = position.count; i < l; i++) {
+  this.vertex.fromBufferAttribute(position, i);
+  this.vertex.x += Math.random() * 20 - 10;
+  this.vertex.y += Math.random() * 2;
+  this.vertex.z += Math.random() * 20 - 10;
+  position.setXYZ(i, this.vertex.x, this.vertex.y, this.vertex.z);
+}
+// ensure each face has unique vertices
+this.floorGeometry = this.floorGeometry.toNonIndexed();
+//
+position = this.floorGeometry.attributes.position;
+```
+
+## FLOOR COLORS
+
+```javascript
+//--------------
+// colorsFloor
+//--------------
+const colorsFloor = [];
+//
+// what makes the triangles of the floor have different colors
+for (let i = 0, l = position.count; i < l; i++) {
+  // here you are generating random colors HSL
+  // color.setHSL( .74, .64, .59 );
+  // https://stackoverflow.com/questions/39596997/has-threejs-sethsl-been-depreciated
+  //
+  this.color.setHSL(
+    Math.random() * 0.3 + 0.5,
+    0.75,
+    Math.random() * 0.25 + 0.75
+  );
+  colorsFloor.push(this.color.r, this.color.g, this.color.b);
+}
+//
+this.floorGeometry.setAttribute(
+  "color",
+  new THREE.Float32BufferAttribute(colorsFloor, 3)
+);
+//
+//
+this.floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
+//
+```
+
+### Add the floor vertex and the floor colors = floor, to the scene
+
+```javascript
+//
+//  Here you add to the scene all the ABOVE
+// the floor represents = this.floorGeometry, this.floorMaterial
+this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
+this.scene.add(this.floor);
+```
+
+[<img src="./src/images/floor-colors.gif"/>]()
