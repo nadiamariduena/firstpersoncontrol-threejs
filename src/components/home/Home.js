@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 // import Header from "../navigation/Header";
-import TropicalVoid from "../3dScenes/TropicFirstPerson";
+import TropicalVoid from '../3dScenes/TropicFirstPerson';
 // import HomePortfolioGallery from "./HomePortfolioGallery";
 // import ContactSection from "./HomeContact";
 // import FooterTextAnimation from "./HomeFooterText";
@@ -33,10 +33,13 @@ function Home() {
 
             <div className="scene-description-home">
               <div className="wrapper-scene-description-home">
-                <h3 className="h3-text-img-home">Featured work</h3>
+                <h3 className="h3-text-img-home">
+                  Featured work
+                </h3>
                 <p>
-                  Website for Meyoko's artworks, I created during my time at
-                  DCI. Additional illustration by Meyoko
+                  Website for Meyoko's artworks, I created
+                  during my time at DCI. Additional
+                  illustration by Meyoko
                 </p>
               </div>
             </div>

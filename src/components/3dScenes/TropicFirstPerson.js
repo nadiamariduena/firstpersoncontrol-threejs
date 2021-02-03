@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import * as THREE from "three";
-import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
+import React, { Component } from 'react';
+import * as THREE from 'three';
+import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
 
 //
 //
@@ -22,12 +22,18 @@ class TropicalVoid extends Component {
     this.addCustomSceneObjects();
     this.startAnimationLoop();
     //
-    window.addEventListener("resize", this.handleWindowResize);
+    window.addEventListener(
+      'resize',
+      this.handleWindowResize
+    );
   }
   //
   //
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleWindowResize);
+    window.removeEventListener(
+      'resize',
+      this.handleWindowResize
+    );
     window.cancelAnimationFrame(this.requestID);
     // right now with the first person control,
     // we dont need this dispose as it s already included inside the three folder, check the read me, in the
@@ -77,7 +83,9 @@ class TropicalVoid extends Component {
     // this.renderer.setClearColor(this.lemonChiffon);
     this.renderer.shadowMap.enabled = true;
     // here you append it to the jsx
-    this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
+    this.eleModelBlOne.appendChild(
+      this.renderer.domElement
+    ); // mount using React ref
     // test
     this.blocker.appendChild(this.renderer.domElement);
     //
@@ -105,22 +113,28 @@ class TropicalVoid extends Component {
     //---------------------------
     //     PointerLockControl
     //---------------------------
-    this.controls = new PointerLockControls(this.camera, this.eleModelBlOne);
+    this.controls = new PointerLockControls(
+      this.camera,
+      this.eleModelBlOne
+    );
     //
     //
     // If i change this to a function () {} it will give me an error
-    this.eleModelBlOne.addEventListener("click", () => {
+    // yeah cause arrow functions bind 'this' and normal one wont
+    this.eleModelBlOne.addEventListener('click', () => {
       this.controls.lock();
+      console.log('I clicked');
     });
     //
-    this.controls.addEventListener("lock", () => {
-      this.eleModelBlOne.style.display = "none";
-      this.blocker.style.display = "none";
+    this.controls.addEventListener('lock', () => {
+      // i dunno why we hiding it on click...
+      this.eleModelBlOne.style.display = 'none';
+      // this.blocker.style.display = 'none';
     });
     //
-    this.controls.addEventListener("unlock", () => {
-      this.blocker.style.display = "block";
-      this.eleModelBlOne.style.display = "";
+    this.controls.addEventListener('unlock', () => {
+      this.blocker.style.display = 'block';
+      this.eleModelBlOne.style.display = '';
     });
     // //
     this.scene.add(this.controls.getObject());
@@ -134,30 +148,30 @@ class TropicalVoid extends Component {
     //
     const onKeyDown = function (event) {
       switch (event.code) {
-        case "ArrowUp":
-        case "KeyW":
+        case 'ArrowUp':
+        case 'KeyW':
           this.moveForward = true;
           break;
 
-        case "ArrowLeft":
-        case "KeyA":
+        case 'ArrowLeft':
+        case 'KeyA':
           this.moveLeft = true;
           break;
 
-        case "ArrowDown":
-        case "KeyS":
+        case 'ArrowDown':
+        case 'KeyS':
           this.moveBackward = true;
           break;
 
-        case "ArrowRight":
-        case "KeyD":
+        case 'ArrowRight':
+        case 'KeyD':
           this.moveRight = true;
           break;
 
         //  ---------
         //  JUMP
         //  ---------
-        case "Space":
+        case 'Space':
           if (this.canJump === true) this.velocity.y += 350;
           this.canJump = false;
           break;
@@ -166,31 +180,34 @@ class TropicalVoid extends Component {
 
     const onKeyUp = function (event) {
       switch (event.code) {
-        case "ArrowUp":
-        case "KeyW":
+        case 'ArrowUp':
+        case 'KeyW':
           this.moveForward = false;
           break;
 
-        case "ArrowLeft":
-        case "KeyA":
+        case 'ArrowLeft':
+        case 'KeyA':
           this.moveLeft = false;
           break;
 
-        case "ArrowDown":
-        case "KeyS":
+        case 'ArrowDown':
+        case 'KeyS':
           this.moveBackward = false;
           break;
 
-        case "ArrowRight":
-        case "KeyD":
+        case 'ArrowRight':
+        case 'KeyD':
           this.moveRight = false;
           break;
       }
     };
     //
     //
-    this.eleModelBlOne.addEventListener("keydown", onKeyDown);
-    this.eleModelBlOne.addEventListener("keyup", onKeyUp);
+    this.eleModelBlOne.addEventListener(
+      'keydown',
+      onKeyDown
+    );
+    this.eleModelBlOne.addEventListener('keyup', onKeyUp);
     //
 
     //
@@ -224,7 +241,12 @@ class TropicalVoid extends Component {
     // floor Geometry
     // ---------------
 
-    this.floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+    this.floorGeometry = new THREE.PlaneGeometry(
+      2000,
+      2000,
+      100,
+      100
+    );
     this.floorGeometry.rotateX(-Math.PI / 2);
     //
     //-------------------
@@ -238,7 +260,12 @@ class TropicalVoid extends Component {
       this.vertex.x += Math.random() * 20 - 10;
       this.vertex.y += Math.random() * 2;
       this.vertex.z += Math.random() * 20 - 10;
-      position.setXYZ(i, this.vertex.x, this.vertex.y, this.vertex.z);
+      position.setXYZ(
+        i,
+        this.vertex.x,
+        this.vertex.y,
+        this.vertex.z
+      );
     }
     // ensure each face has unique vertices  **
     this.floorGeometry = this.floorGeometry.toNonIndexed();
@@ -258,20 +285,29 @@ class TropicalVoid extends Component {
         0.75,
         Math.random() * 0.25 + 0.75
       );
-      colorsFloor.push(this.color.r, this.color.g, this.color.b);
+      colorsFloor.push(
+        this.color.r,
+        this.color.g,
+        this.color.b
+      );
     }
     //
     this.floorGeometry.setAttribute(
-      "color",
+      'color',
       new THREE.Float32BufferAttribute(colorsFloor, 3)
     );
     //
     //
-    this.floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
+    this.floorMaterial = new THREE.MeshBasicMaterial({
+      vertexColors: true,
+    });
     //
     //
     // ------------ Here you add to the scene all the ABOVE -----
-    this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
+    this.floor = new THREE.Mesh(
+      this.floorGeometry,
+      this.floorMaterial
+    );
     this.scene.add(this.floor);
     //
     //
@@ -279,7 +315,11 @@ class TropicalVoid extends Component {
     // BOXES GEOMETRY
     // ---------
     // .toNonIndexed();  ensure each face has unique vertices
-    this.boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
+    this.boxGeometry = new THREE.BoxGeometry(
+      20,
+      20,
+      20
+    ).toNonIndexed();
     //
     position = this.boxGeometry.attributes.position;
     //--------------
@@ -293,11 +333,15 @@ class TropicalVoid extends Component {
         0.75,
         Math.random() * 0.25 + 0.75
       );
-      colorsBox.push(this.color.r, this.color.g, this.color.b);
+      colorsBox.push(
+        this.color.r,
+        this.color.g,
+        this.color.b
+      );
     }
     //
     this.boxGeometry.setAttribute(
-      "color",
+      'color',
       new THREE.Float32BufferAttribute(colorsBox, 3)
     );
     //
@@ -318,10 +362,16 @@ class TropicalVoid extends Component {
       // ---------
       // BOX
       // ---------
-      const box = new THREE.Mesh(this.boxGeometry, boxMaterial);
-      box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
-      box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
-      box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
+      const box = new THREE.Mesh(
+        this.boxGeometry,
+        boxMaterial
+      );
+      box.position.x =
+        Math.floor(Math.random() * 20 - 10) * 20;
+      box.position.y =
+        Math.floor(Math.random() * 20) * 20 + 10;
+      box.position.z =
+        Math.floor(Math.random() * 20 - 10) * 20;
 
       this.scene.add(box);
       this.objects.push(box);
@@ -354,7 +404,9 @@ class TropicalVoid extends Component {
     this.renderer.shadowMap.autoUpdate = true;
     this.renderer.gammaFactor = 2.2;
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff);
+    const directionalLight = new THREE.DirectionalLight(
+      0xffffff
+    );
     directionalLight.position.set(5, -1, 100);
 
     // position as follow , the light comes from x:-1000, comes from: y and the last comes from : z
@@ -414,35 +466,48 @@ class TropicalVoid extends Component {
   // 3
   startAnimationLoop = () => {
     //
-    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+    this.requestID = window.requestAnimationFrame(
+      this.startAnimationLoop
+    );
 
     this.time = performance.now();
     //
     //
     if (this.controls.isLocked === true) {
-      raycaster.ray.origin.copy(this.controls.getObject().position);
+      raycaster.ray.origin.copy(
+        this.controls.getObject().position
+      );
       // A ray that emits from an origin in a certain direction.
       raycaster.ray.origin.y -= 10;
 
-      this.intersections = raycaster.intersectObjects(this.objects);
+      this.intersections = raycaster.intersectObjects(
+        this.objects
+      );
 
       this.onObject = this.intersections.length > 0;
 
       this.delta = (this.time - this.prevTime) / 1000;
 
-      this.velocity.x -= this.velocity.x * 10.0 * this.delta;
-      this.velocity.z -= this.velocity.z * 10.0 * this.delta;
+      this.velocity.x -=
+        this.velocity.x * 10.0 * this.delta;
+      this.velocity.z -=
+        this.velocity.z * 10.0 * this.delta;
 
       this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
 
-      this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
-      this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
+      this.direction.z =
+        Number(this.moveForward) -
+        Number(this.moveBackward);
+      this.direction.x =
+        Number(this.moveRight) - Number(this.moveLeft);
       this.direction.normalize(); // this ensures consistent movements in all directions
 
       if (this.moveForward || this.moveBackward)
-        this.velocity.z -= this.direction.z * 400.0 * this.delta;
+        this.velocity.z -=
+          this.direction.z * 400.0 * this.delta;
       if (this.moveLeft || this.moveRight)
-        this.velocity.x -= this.direction.x * 400.0 * this.delta;
+        this.velocity.x -=
+          this.direction.x * 400.0 * this.delta;
       //
       //
       if (this.onObject === true) {
@@ -450,9 +515,14 @@ class TropicalVoid extends Component {
         this.canJump = true;
       }
 
-      this.controls.moveRight(-this.velocity.x * this.delta);
-      this.controls.moveForward(-this.velocity.z * this.delta);
-      this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
+      this.controls.moveRight(
+        -this.velocity.x * this.delta
+      );
+      this.controls.moveForward(
+        -this.velocity.z * this.delta
+      );
+      this.controls.getObject().position.y +=
+        this.velocity.y * this.delta; // new behavior
       //
       //
       if (this.controls.getObject().position.y < 10) {
@@ -492,7 +562,10 @@ class TropicalVoid extends Component {
   render() {
     return (
       <div className="scene-oblivion">
-        <div className="blocker" ref={(ref) => (this.blocker = ref)}>
+        <div
+          className="blocker"
+          ref={(ref) => (this.blocker = ref)}
+        >
           {/* --------------------- */}
           {/* --------------------- */}
           {/* --------------------- */}
