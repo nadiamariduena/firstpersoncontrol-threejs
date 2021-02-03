@@ -915,12 +915,16 @@ export default TropicalVoid;
 
 # 🦄
 
-# THE NEW CODE
+# PointerLockControls
+
+[FirstPerson controls horizontal constraint](https://discourse.threejs.org/t/firstperson-controls-horizontal-constraint/17739)
 
 - I FOUND this example while i was looking for solutions related to the DRACO converter, what i like is the possibility of jump into the objects :) 🏃
 
 <br>
 <br>
+
+###### (update) it worked!
 
 ##### I TRIED TO ADD THE BLOCKER but it didnt work because I am trying to add an event listener to threejs "the scene" , it would have been easy to just have some div to make the connection to but for now i prefer to pass
 
@@ -1884,6 +1888,6 @@ this.controls.addEventListener("unlock", () => {
 
 [<img src="./src/images/removingthe-locker.gif"/>]()
 
-### Everything show but there isn't any moving camera!
+### Everything shows but there isn't any moving camera!
 
 [<img src="./src/images/columbo.gif"/>]()
