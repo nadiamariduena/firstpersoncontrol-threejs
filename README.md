@@ -1884,6 +1884,6 @@ this.controls.addEventListener("unlock", () => {
 
 [<img src="./src/images/removingthe-locker.gif"/>]()
 
-### Everything will show but there isnt any moving camera!
+### Everything show but there isn't any moving camera!
 
 [<img src="./src/images/columbo.gif"/>]()
