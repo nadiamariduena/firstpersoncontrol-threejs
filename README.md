@@ -1891,6 +1891,24 @@ export default TropicalVoid;
 
 - hinding the blocker div from scss
 
+<br>
+
+## BUT What is lock() ?
+
+<br>
+
+- **THE locks()** gives you access to raw mouse movement.
+
+<br>
+
+- **LOCKS the target of the mouse events to a single element, eliminates limits on how far mouse movement can go** in a single direction, and removes the cursor from view. Good for 1 person 3d games
+
+<br>
+
+- This means that when you are actually moving the mouse across the screen (without displacing yourself), the pointer has been LOCK to the canvas
+
+<br>
+
 ```javascript
 // If i change this to a function () {} it will give me an error
 this.eleModelBlOne.addEventListener("click", () => {
@@ -1914,3 +1932,221 @@ this.controls.addEventListener("unlock", () => {
 ### Everything shows but there isn't any moving camera!
 
 [<img src="./src/images/columbo.gif"/>]()
+
+#### AFTER HOURS AND HOURS of looking for a solution I had to ask my teachers at DCI and UDEMY
+
+- One of my teachers (Vasilis), made some changes, it was actually this what caused the issue inside de divs:
+
+```javascript
+//
+// ----------
+//   BEFORE
+//----------
+
+// If i change this to a function () {} it will give me an error
+this.eleModelBlOne.addEventListener("click", () => {
+  this.controls.lock();
+});
+//
+this.controls.addEventListener("lock", () => {
+  this.eleModelBlOne.style.display = "none";
+  this.blocker.style.display = "none";
+});
+//
+this.controls.addEventListener("unlock", () => {
+  this.blocker.style.display = "block";
+  this.eleModelBlOne.style.display = "";
+});
+//
+//--------------------
+// AFTER
+// -------------------
+// Vasilis Solution
+//
+// If i change this to a function () {} it will give me an error
+// Vasilis answer: // yeah cause arrow functions bind 'this' and normal one wont.
+
+this.eleModelBlOne.addEventListener("click", () => {
+  this.controls.lock();
+
+  console.log("I clicked");
+});
+
+this.controls.addEventListener("lock", () => {
+  // i dunno why we hiding it on click...
+  this.eleModelBlOne.style.display = "none";
+});
+//
+
+this.controls.addEventListener("unlock", () => {
+  this.eleModelBlOne.style.display = "block";
+});
+// //
+// //
+// //
+<div className="scene-oblivion">
+  <div className="blocker" ref={(ref) => (this.blocker = ref)}>
+    {/* --------------------- */}
+    {/* --------------------- */}
+    {/* --------------------- */}
+    <div
+      className="modelBleOne"
+      style={style}
+      ref={(ref) => (this.eleModelBlOne = ref)}
+    >
+      <div className="commands">
+        <span>Click to play</span>
+        <br />
+        <br />
+        Move: WASD
+        <br />
+        Jump: SPACE
+        <br />
+        Look: MOUSE
+      </div>
+    </div>
+    {/* --------------------- */}
+    {/* --------------------- */}
+  </div>
+  {/* --------------------- */}
+</div>;
+/*
+scss
+
+              .scene-oblivion {
+            width: 100%;
+            height: 80vh;
+            max-width: 1000px;
+
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .blocker {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.5);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .modelBleOne {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                text-align: center;
+                max-width: 1000px;
+                overflow: hidden;
+                position: absolute;
+                background: rgba(255, 0, 0, 0.527);
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                //
+                //
+                cursor: pointer;
+              }
+            }
+          }
+
+
+*/
+```
+
+<br>
+
+[<img src="./src/images/events_work-vasilis.gif"/>]()
+
+<br>
+<br>
+<br>
+
+# 🚀🚀🚀
+
+## GREAT!! THE CAMERA IS WORKING BUT...
+
+- the Keys dont do anything 🤔
+
+<!-- #
+
+ startAnimationLoop = () => {
+    //
+    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    //
+    //// Are the controls enabled? (Does the browser have pointer lock?)
+    if (this.controls.isLocked === true) {
+      // Save the current time
+      this.time = performance.now();
+      //
+      raycaster.ray.origin.copy(this.controls.getObject().position);
+      // A ray that emits from an origin in a certain direction.
+      raycaster.ray.origin.y -= 10;
+
+      this.intersections = raycaster.intersectObjects(this.objects);
+
+      this.onObject = this.intersections.length > 0;
+      // Create a delta value based on current time
+      this.delta = (this.time - this.prevTime) / 1000;
+      //
+      //
+      //
+      // Set the velocity.x and velocity.z using the calculated time delta
+      this.velocity.x -= this.velocity.x * 10.0 * this.delta;
+      this.velocity.z -= this.velocity.z * 10.0 * this.delta;
+      // As velocity.y is our "gravity," calculate delta
+      this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
+
+      if (this.controls.moveForward) {
+        this.velocity.z -= 400.0 * this.delta;
+      }
+
+      if (this.controls.moveBackward) {
+        this.velocity.z += 400.0 * this.delta;
+      }
+
+      if (this.controls.moveLeft) {
+        this.velocity.x -= 400.0 * this.delta;
+      }
+
+      if (this.controls.moveRight) {
+        this.velocity.x += 400.0 * this.delta;
+      }
+
+      if (this.moveForward || this.moveBackward)
+        this.velocity.z -= this.direction.z * 400.0 * this.delta;
+      if (this.moveLeft || this.moveRight)
+        this.velocity.x -= this.direction.x * 400.0 * this.delta;
+      //
+      //
+      if (this.onObject === true) {
+        this.velocity.y = Math.max(0, this.velocity.y);
+        this.canJump = true;
+      }
+
+      this.controls.moveRight(-this.velocity.x * this.delta);
+      this.controls.moveForward(-this.velocity.z * this.delta);
+      this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
+      //
+      //
+      //
+      if (this.controls.getObject().position.y < 10) {
+        this.velocity.y = 0;
+        this.controls.getObject().position.y = 10;
+
+        this.canJump = true;
+      }
+    }
+    //
+    //
+    this.prevTime = this.time;
+
+    //
+    this.renderer.render(this.scene, this.camera);
+  };
+
+
+   -->

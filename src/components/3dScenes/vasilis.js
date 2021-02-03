@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
-
 //
 //
 const style = {
@@ -41,23 +40,6 @@ class TropicalVoid extends Component {
   */
   // 1
   sceneSetup = () => {
-    //
-    //----------------
-    this.objects = [];
-    //----------------
-    //
-
-    this.moveForward = false;
-    this.moveBackward = false;
-    this.moveLeft = false;
-    this.moveRight = false;
-    this.canJump = false;
-
-    this.prevTime = performance.now();
-    this.velocity = new THREE.Vector3();
-    this.direction = new THREE.Vector3();
-    this.vertex = new THREE.Vector3();
-    this.color = new THREE.Color();
     // background color scene
     // this.lemonChiffon = "rgb(240, 224, 190)";
 
@@ -94,13 +76,29 @@ class TropicalVoid extends Component {
     // this.renderer.setClearColor(this.lemonChiffon);
     this.renderer.shadowMap.enabled = true;
     // here you append it to the jsx
-    this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
-    // test
+    this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref    // test
     this.blocker.appendChild(this.renderer.domElement);
     //
     //
     //
     //
+    //
+    //----------------
+    this.objects = [];
+    //----------------
+    //
+
+    this.moveForward = false;
+    this.moveBackward = false;
+    this.moveLeft = false;
+    this.moveRight = false;
+    this.canJump = false;
+
+    this.prevTime = performance.now();
+    this.velocity = new THREE.Vector3();
+    this.direction = new THREE.Vector3();
+    this.vertex = new THREE.Vector3();
+    this.color = new THREE.Color();
 
     //---------------------------
     //     PointerLockControl
@@ -149,7 +147,6 @@ class TropicalVoid extends Component {
     });
     // //
     this.scene.add(this.controls.getObject());
-    //
     //
     //
     //
@@ -215,10 +212,10 @@ class TropicalVoid extends Component {
     };
     //
     //
-    document.addEventListener("keydown", onKeyDown, false);
-
-    document.addEventListener("keyup", onKeyUp, false);
-
+    // this.eleModelBlOne.addEventListener("keydown", onKeyDown);
+    // this.eleModelBlOne.addEventListener("keyup", onKeyUp);
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("keyup", onKeyUp);
     //
 
     //
@@ -254,6 +251,7 @@ class TropicalVoid extends Component {
 
     this.floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
     this.floorGeometry.rotateX(-Math.PI / 2);
+    // rotated 90° on the X axis
     //
     //-------------------
     // vertex displacement
@@ -263,6 +261,7 @@ class TropicalVoid extends Component {
     //
     for (let i = 0, l = position.count; i < l; i++) {
       this.vertex.fromBufferAttribute(position, i);
+      // randomly somewhere in 'that space "x, y, z "
       this.vertex.x += Math.random() * 20 - 10;
       this.vertex.y += Math.random() * 2;
       this.vertex.z += Math.random() * 20 - 10;
@@ -355,23 +354,7 @@ class TropicalVoid extends Component {
       this.objects.push(box);
     }
     //
-    //
-    //
-    //
-    //
-    //----------------------------------
-    //         BLENDER  MODELS
-    //----------------------------------
-    //
 
-    /*
-    
-    
-    
-    
-    
-    
-    */
     //---------------------
     //   Directional Light
     //---------------------
@@ -422,6 +405,19 @@ class TropicalVoid extends Component {
     //
     this.scene.add(this.spotLight);
     // //
+    //
+
+    /*
+
+
+
+ 
+ */
+    //
+    //
+    // ------------------ clock
+
+    //
     //
     //
   };
@@ -516,16 +512,14 @@ class TropicalVoid extends Component {
             style={style}
             ref={(ref) => (this.eleModelBlOne = ref)}
           >
-            <div className="commands">
-              <span>Click to play</span>
-              <br />
-              <br />
-              Move: WASD
-              <br />
-              Jump: SPACE
-              <br />
-              Look: MOUSE
-            </div>
+            <span className="spanky">Click to play</span>
+            <br />
+            <br />
+            Move: WASD
+            <br />
+            Jump: SPACE
+            <br />
+            Look: MOUSE
           </div>
           {/* --------------------- */}
           {/* --------------------- */}

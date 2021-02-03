@@ -3,7 +3,7 @@ import React from "react";
 // import Header from "../navigation/Header";
 import TropicalVoid from "../3dScenes/TropicFirstPerson";
 // import HomePortfolioGallery from "./HomePortfolioGallery";
-// import ContactSection from "./HomeContact";
+import ContactSection from "./HomeContact";
 // import FooterTextAnimation from "./HomeFooterText";
 
 //
@@ -31,7 +31,7 @@ function Home() {
             </div>
             {/* ----------------------------------------- */}
 
-            <div className="scene-description-home">
+            {/* <div className="scene-description-home">
               <div className="wrapper-scene-description-home">
                 <h3 className="h3-text-img-home">Featured work</h3>
                 <p>
@@ -39,7 +39,7 @@ function Home() {
                   DCI. Additional illustration by Meyoko
                 </p>
               </div>
-            </div>
+            </div> */}
             {/* ----------------------------------------- */}
           </div>
         </div>
