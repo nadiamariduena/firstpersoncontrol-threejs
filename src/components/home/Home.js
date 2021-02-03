@@ -1,9 +1,9 @@
 import React from "react";
 
-import Header from "../navigation/Header";
+// import Header from "../navigation/Header";
 import TropicalVoid from "../3dScenes/TropicFirstPerson";
 // import HomePortfolioGallery from "./HomePortfolioGallery";
-import ContactSection from "./HomeContact";
+// import ContactSection from "./HomeContact";
 // import FooterTextAnimation from "./HomeFooterText";
 
 //
@@ -14,7 +14,7 @@ function Home() {
       {/* --------------- */}
       {/* --------------- */}
       {/* --------------- */}
-      <Header />
+      {/* <Header /> */}
       {/* --------------- */}
       {/* --------------- */}
       {/* --------------- */}
@@ -64,7 +64,7 @@ function Home() {
       {/* ----------------------------------------- */}
       {/*             CONTACT SECTION               */}
       {/* ----------------------------------------- */}
-      <ContactSection />
+      {/* <ContactSection /> */}
       {/* --------------- */}
       {/* <FooterTextAnimation /> */}
     </React.Fragment>

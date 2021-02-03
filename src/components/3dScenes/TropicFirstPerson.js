@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 //
 //
 const style = {
   height: 600, // we can control scene size by setting container dimensions
 };
-//
-//
-//
-
-//
-//
+let raycaster;
 /*
 
 
@@ -39,7 +32,7 @@ class TropicalVoid extends Component {
     // right now with the first person control,
     // we dont need this dispose as it s already included inside the three folder, check the read me, in the
     // beginning you will find a copy of the code inside the threejs that I am using.
-    // this.controls.dispose();
+    this.controls.dispose();
   }
   /*
 
@@ -65,6 +58,7 @@ class TropicalVoid extends Component {
     this.camera.position.y = 10;
 
     //
+
     //
     this.renderer = new THREE.WebGL1Renderer({
       // set the transparency of the scene, otherwise its black
@@ -77,18 +71,17 @@ class TropicalVoid extends Component {
     //
 
     //
-    //
+    //renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize(width, height);
     // BG color from the scene
     // this.renderer.setClearColor(this.lemonChiffon);
     this.renderer.shadowMap.enabled = true;
     // here you append it to the jsx
     this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
-
+    // test
+    // this.blocker.appendChild(this.renderer.domElement);
     //
     //
-    //
-    this.controls = new PointerLockControls(this.camera, this.eleModelBlOne);
     //
     //
     //
@@ -96,7 +89,6 @@ class TropicalVoid extends Component {
     this.objects = [];
     //----------------
     //
-    let raycaster;
 
     this.moveForward = false;
     this.moveBackward = false;
@@ -109,11 +101,37 @@ class TropicalVoid extends Component {
     this.direction = new THREE.Vector3();
     this.vertex = new THREE.Vector3();
     this.color = new THREE.Color();
-    //
-    //
-    //
-    //
 
+    //---------------------------
+    //     PointerLockControl
+    //---------------------------
+    this.controls = new PointerLockControls(this.camera, this.eleModelBlOne);
+    //
+    //
+    // // If i change this to a function () {} it will give me an error
+    // this.eleModelBlOne.addEventListener("click", () => {
+    //   this.controls.lock();
+    // });
+    // //
+    // this.controls.addEventListener("lock", () => {
+    //   this.eleModelBlOne.style.display = "none";
+    //   this.blocker.style.display = "none";
+    // });
+    // //
+    // this.controls.addEventListener("unlock", () => {
+    //   this.blocker.style.display = "block";
+    //   this.eleModelBlOne.style.display = "";
+    // });
+    // // //
+    // this.scene.add(this.controls.getObject());
+    //
+    //
+    //
+    //-------------------------------
+    //             KEYS
+    //-------------------------------
+    //
+    //
     const onKeyDown = function (event) {
       switch (event.code) {
         case "ArrowUp":
@@ -171,17 +189,36 @@ class TropicalVoid extends Component {
     };
     //
     //
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("keyup", onKeyUp);
+    this.eleModelBlOne.addEventListener("keydown", onKeyDown);
+    this.eleModelBlOne.addEventListener("keyup", onKeyUp);
     //
 
     //
-    this.raycaster = new THREE.Raycaster(
+    raycaster = new THREE.Raycaster(
       new THREE.Vector3(),
       new THREE.Vector3(0, -1, 0),
       0,
       10
     );
+    //
+    //
+    //
+    //
+  };
+  //
+
+  /*
+
+
+
+
+
+
+  */
+  // 2
+  addCustomSceneObjects = () => {
+    //-------------------------------
+    //
     //
     // ---------------
     // floor Geometry
@@ -289,78 +326,14 @@ class TropicalVoid extends Component {
       this.scene.add(box);
       this.objects.push(box);
     }
-
     //
     //
     //
-  };
-  //
-
-  /*
-
-
-
-
-
-
-  */
-  // 2
-  addCustomSceneObjects = () => {
+    //
+    //
     //----------------------------------
     //         BLENDER  MODELS
     //----------------------------------
-    //
-    const loader = new GLTFLoader();
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("myDecoder/");
-    loader.setDRACOLoader(dracoLoader);
-
-    //
-    // terrain_grosso_moon.-Normalize-4_.glb
-    // 49,4Kb
-    loader.load("./models/palmera-sun-palmeras2_retoucheeeggg.glb", (gltf) => {
-      this.meshy = gltf.scene;
-
-      gltf.scene.traverse((model) => {
-        if (model.material) model.material.metalness = 0.08;
-
-        model.receiveShadow = true;
-        model.scale.set(2, 2, 2);
-        // model.rotation.y = 1;
-        // model.rotation.x += -0;
-        // model.rotation.y += 0;
-        //
-        model.position.x = 0;
-        model.position.y = -0.4;
-        model.position.z = 0;
-        //
-        //
-        //
-      });
-
-      this.scene.add(gltf.scene);
-    });
-    //
-    /*
-    // Add PLANE  w , h , segments
-    const planeGeometry = new THREE.PlaneGeometry(500, 500, 100, 55);
-    const planeMaterial = new THREE.MeshLambertMaterial({
-      color: 0xdddddd,
-      wireframe: true,
-    });
-    // var planeMaterial = new THREE.MeshLambertMaterial((color: 0xff0000));
-    this.plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    //
-    this.plane.rotation.x = -0.5 * Math.PI;
-    this.plane.position.y = -1;
-    //
-    //
-    // *** RECEIVE SHADOW
-    // related to the light and the shadow
-    this.plane.receiveShadow = true;
-    this.scene.add(this.plane);
-    //
-    */
     //
 
     /*
@@ -441,8 +414,60 @@ class TropicalVoid extends Component {
   // 3
   startAnimationLoop = () => {
     //
-    this.renderer.render(this.scene, this.camera);
     this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    this.time = performance.now();
+    //
+    //
+    // if (this.controls.isLocked === true) {
+    raycaster.ray.origin.copy(this.controls.getObject().position);
+    // A ray that emits from an origin in a certain direction.
+    raycaster.ray.origin.y -= 10;
+
+    this.intersections = raycaster.intersectObjects(this.objects);
+
+    this.onObject = this.intersections.length > 0;
+
+    this.delta = (this.time - this.prevTime) / 1000;
+
+    this.velocity.x -= this.velocity.x * 10.0 * this.delta;
+    this.velocity.z -= this.velocity.z * 10.0 * this.delta;
+
+    this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
+
+    this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
+    this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
+    this.direction.normalize(); // this ensures consistent movements in all directions
+
+    if (this.moveForward || this.moveBackward)
+      this.velocity.z -= this.direction.z * 400.0 * this.delta;
+    if (this.moveLeft || this.moveRight)
+      this.velocity.x -= this.direction.x * 400.0 * this.delta;
+    //
+    //
+    if (this.onObject === true) {
+      this.velocity.y = Math.max(0, this.velocity.y);
+      this.canJump = true;
+    }
+
+    this.controls.moveRight(-this.velocity.x * this.delta);
+    this.controls.moveForward(-this.velocity.z * this.delta);
+    this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
+    //
+    //
+    if (this.controls.getObject().position.y < 10) {
+      this.velocity.y = 0;
+      this.controls.getObject().position.y = 10;
+
+      this.canJump = true;
+    }
+    // }
+    //
+    //
+    this.prevTime = this.time;
+
+    //
+    this.renderer.render(this.scene, this.camera);
   };
   /*
 
@@ -467,11 +492,29 @@ class TropicalVoid extends Component {
   render() {
     return (
       <div className="scene-oblivion">
-        <div
-          className="modelBleOne"
-          style={style}
-          ref={(ref) => (this.eleModelBlOne = ref)}
-        ></div>
+        {/* <div className="blocker" ref={(ref) => (this.blocker = ref)}> */}
+          {/* --------------------- */}
+          {/* --------------------- */}
+          {/* --------------------- */}
+          <div
+            onClick={this.handleClick}
+            className="modelBleOne"
+            style={style}
+            ref={(ref) => (this.eleModelBlOne = ref)}
+          >
+            <span>Click to play</span>
+            <br />
+            <br />
+            Move: WASD
+            <br />
+            Jump: SPACE
+            <br />
+            Look: MOUSE
+          </div>
+          {/* --------------------- */}
+          {/* --------------------- */}
+        {/* </div> */}
+        {/* --------------------- */}
       </div>
     );
   }

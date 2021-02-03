@@ -14,7 +14,6 @@ class App extends Component {
           <div id="wrapper-app">
             <Switch>
               <Route exact path="/" component={Home} />
-
               {/* <Route exact path="/portfolio" component={Portfolio} /> */}
             </Switch>
           </div>

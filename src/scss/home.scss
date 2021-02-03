@@ -27,6 +27,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
+
           .scene-oblivion {
             width: 100%;
             height: 80vh;
@@ -35,6 +36,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            //
+            position: relative;
+            // .blocker {
+            //   position: absolute;
+            //   width: 100%;
+            //   height: 100%;
+            //   background-color: rgba(0, 0, 0, 0.5);
+
             .modelBleOne {
               width: 100%;
               height: 100%;
@@ -42,7 +51,11 @@
               text-align: center;
               max-width: 800px;
               overflow: hidden;
+              //
+              //
+              // cursor: pointer;
             }
+            // }
           }
         }
         // -----------------
