@@ -2070,83 +2070,164 @@ scss
 
 - the Keys dont do anything 🤔
 
-<!-- #
+#### After few hours of research I finally found something that could at least make the control move
 
- startAnimationLoop = () => {
+- I replaced the following
+
+```javascript
+// -------------
+// before
+// --------------
+startAnimationLoop = () => {
+  //
+  this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+  this.time = performance.now();
+  //
+  //
+  if (this.controls.isLocked === true) {
+    raycaster.ray.origin.copy(this.controls.getObject().position);
+    // A ray that emits from an origin in a certain direction.
+    raycaster.ray.origin.y -= 10;
+
+    this.intersections = raycaster.intersectObjects(this.objects);
+
+    this.onObject = this.intersections.length > 0;
+
+    this.delta = (this.time - this.prevTime) / 1000;
+
+    this.velocity.x -= this.velocity.x * 10.0 * this.delta;
+    this.velocity.z -= this.velocity.z * 10.0 * this.delta;
+
+    this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
+
+    this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
+    this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
+    this.direction.normalize(); // this ensures consistent movements in all directions
+
+    if (this.moveForward || this.moveBackward)
+      this.velocity.z -= this.direction.z * 400.0 * this.delta;
+    if (this.moveLeft || this.moveRight)
+      this.velocity.x -= this.direction.x * 400.0 * this.delta;
     //
-    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+    //
+    if (this.onObject === true) {
+      this.velocity.y = Math.max(0, this.velocity.y);
+      this.canJump = true;
+    }
+
+    this.controls.moveRight(-this.velocity.x * this.delta);
+    this.controls.moveForward(-this.velocity.z * this.delta);
+    this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
+    //
+    //
+    if (this.controls.getObject().position.y < 10) {
+      this.velocity.y = 0;
+      this.controls.getObject().position.y = 10;
+
+      this.canJump = true;
+    }
+  }
+  //
+  //
+  this.prevTime = this.time;
+
+  //
+  this.renderer.render(this.scene, this.camera);
+};
+//
+//
+// --------------
+//   AFTER
+// --------------
+//
+//
+startAnimationLoop = () => {
+  //
+  this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+  // Save the current time
+  this.time = performance.now();
+  //
+  //// Are the controls enabled? (Does the browser have pointer lock?)
+  if (this.controls.isLocked === true) {
+    //
+    raycaster.ray.origin.copy(this.controls.getObject().position);
+    // A ray that emits from an origin in a certain direction.
+    raycaster.ray.origin.y -= 10;
+
+    this.intersections = raycaster.intersectObjects(this.objects);
+
+    this.onObject = this.intersections.length > 0;
+    // Create a delta value based on current time
+    this.delta = (this.time - this.prevTime) / 1000;
+    //
+    //
+    //
+    // Set the velocity.x and velocity.z using the calculated time delta
+    this.velocity.x -= this.velocity.x * 10.0 * this.delta;
+    this.velocity.z -= this.velocity.z * 10.0 * this.delta;
+    // As velocity.y is our "gravity," calculate delta
+    this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
 
     //
-    //// Are the controls enabled? (Does the browser have pointer lock?)
-    if (this.controls.isLocked === true) {
-      // Save the current time
-      this.time = performance.now();
-      //
-      raycaster.ray.origin.copy(this.controls.getObject().position);
-      // A ray that emits from an origin in a certain direction.
-      raycaster.ray.origin.y -= 10;
+    //              *****
+    //              new
+    if (this.controls.moveForward) {
+      this.velocity.z -= 400.0 * this.delta;
+    }
 
-      this.intersections = raycaster.intersectObjects(this.objects);
+    if (this.controls.moveBackward) {
+      this.velocity.z += 400.0 * this.delta;
+    }
 
-      this.onObject = this.intersections.length > 0;
-      // Create a delta value based on current time
-      this.delta = (this.time - this.prevTime) / 1000;
-      //
-      //
-      //
-      // Set the velocity.x and velocity.z using the calculated time delta
-      this.velocity.x -= this.velocity.x * 10.0 * this.delta;
-      this.velocity.z -= this.velocity.z * 10.0 * this.delta;
-      // As velocity.y is our "gravity," calculate delta
-      this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
+    if (this.controls.moveLeft) {
+      this.velocity.x -= 400.0 * this.delta;
+    }
 
-      if (this.controls.moveForward) {
-        this.velocity.z -= 400.0 * this.delta;
-      }
-
-      if (this.controls.moveBackward) {
-        this.velocity.z += 400.0 * this.delta;
-      }
-
-      if (this.controls.moveLeft) {
-        this.velocity.x -= 400.0 * this.delta;
-      }
-
-      if (this.controls.moveRight) {
-        this.velocity.x += 400.0 * this.delta;
-      }
-
-      if (this.moveForward || this.moveBackward)
-        this.velocity.z -= this.direction.z * 400.0 * this.delta;
-      if (this.moveLeft || this.moveRight)
-        this.velocity.x -= this.direction.x * 400.0 * this.delta;
-      //
-      //
-      if (this.onObject === true) {
-        this.velocity.y = Math.max(0, this.velocity.y);
-        this.canJump = true;
-      }
-
-      this.controls.moveRight(-this.velocity.x * this.delta);
-      this.controls.moveForward(-this.velocity.z * this.delta);
-      this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
-      //
-      //
-      //
-      if (this.controls.getObject().position.y < 10) {
-        this.velocity.y = 0;
-        this.controls.getObject().position.y = 10;
-
-        this.canJump = true;
-      }
+    if (this.controls.moveRight) {
+      this.velocity.x += 400.0 * this.delta;
     }
     //
+    //              *****
     //
-    this.prevTime = this.time;
-
+    if (this.moveForward || this.moveBackward)
+      this.velocity.z -= this.direction.z * 400.0 * this.delta;
+    if (this.moveLeft || this.moveRight)
+      this.velocity.x -= this.direction.x * 400.0 * this.delta;
     //
-    this.renderer.render(this.scene, this.camera);
-  };
+    //
+    if (this.onObject === true) {
+      this.velocity.y = Math.max(0, this.velocity.y);
+      this.canJump = true;
+    }
+    //
+    //              *****
+    //
 
+    this.controls.moveRight(-this.velocity.x * this.delta);
+    this.controls.moveForward(-this.velocity.z * this.delta);
+    this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
+    //
+    //
+    //
+    if (this.controls.getObject().position.y < 10) {
+      this.velocity.y = 0;
+      this.controls.getObject().position.y = 10;
 
-   -->
+      this.canJump = true;
+    }
+  }
+  //
+  //
+  this.prevTime = this.time;
+
+  //
+  this.renderer.render(this.scene, this.camera);
+};
+```
+
+### ONLY PROBLEM
+
+- Its certainly moving towards the direction I want but i cant use the keys
+
+[<img src="./src/images/control_moving.gif"/>]()
