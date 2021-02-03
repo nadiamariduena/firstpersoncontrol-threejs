@@ -79,7 +79,7 @@ class TropicalVoid extends Component {
     // here you append it to the jsx
     this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
     // test
-    // this.blocker.appendChild(this.renderer.domElement);
+    this.blocker.appendChild(this.renderer.domElement);
     //
     //
     //
@@ -108,22 +108,22 @@ class TropicalVoid extends Component {
     this.controls = new PointerLockControls(this.camera, this.eleModelBlOne);
     //
     //
-    // // If i change this to a function () {} it will give me an error
-    // this.eleModelBlOne.addEventListener("click", () => {
-    //   this.controls.lock();
-    // });
+    // If i change this to a function () {} it will give me an error
+    this.eleModelBlOne.addEventListener("click", () => {
+      this.controls.lock();
+    });
+    //
+    this.controls.addEventListener("lock", () => {
+      this.eleModelBlOne.style.display = "none";
+      this.blocker.style.display = "none";
+    });
+    //
+    this.controls.addEventListener("unlock", () => {
+      this.blocker.style.display = "block";
+      this.eleModelBlOne.style.display = "";
+    });
     // //
-    // this.controls.addEventListener("lock", () => {
-    //   this.eleModelBlOne.style.display = "none";
-    //   this.blocker.style.display = "none";
-    // });
-    // //
-    // this.controls.addEventListener("unlock", () => {
-    //   this.blocker.style.display = "block";
-    //   this.eleModelBlOne.style.display = "";
-    // });
-    // // //
-    // this.scene.add(this.controls.getObject());
+    this.scene.add(this.controls.getObject());
     //
     //
     //
@@ -419,49 +419,49 @@ class TropicalVoid extends Component {
     this.time = performance.now();
     //
     //
-    // if (this.controls.isLocked === true) {
-    raycaster.ray.origin.copy(this.controls.getObject().position);
-    // A ray that emits from an origin in a certain direction.
-    raycaster.ray.origin.y -= 10;
+    if (this.controls.isLocked === true) {
+      raycaster.ray.origin.copy(this.controls.getObject().position);
+      // A ray that emits from an origin in a certain direction.
+      raycaster.ray.origin.y -= 10;
 
-    this.intersections = raycaster.intersectObjects(this.objects);
+      this.intersections = raycaster.intersectObjects(this.objects);
 
-    this.onObject = this.intersections.length > 0;
+      this.onObject = this.intersections.length > 0;
 
-    this.delta = (this.time - this.prevTime) / 1000;
+      this.delta = (this.time - this.prevTime) / 1000;
 
-    this.velocity.x -= this.velocity.x * 10.0 * this.delta;
-    this.velocity.z -= this.velocity.z * 10.0 * this.delta;
+      this.velocity.x -= this.velocity.x * 10.0 * this.delta;
+      this.velocity.z -= this.velocity.z * 10.0 * this.delta;
 
-    this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
+      this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
 
-    this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
-    this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
-    this.direction.normalize(); // this ensures consistent movements in all directions
+      this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
+      this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
+      this.direction.normalize(); // this ensures consistent movements in all directions
 
-    if (this.moveForward || this.moveBackward)
-      this.velocity.z -= this.direction.z * 400.0 * this.delta;
-    if (this.moveLeft || this.moveRight)
-      this.velocity.x -= this.direction.x * 400.0 * this.delta;
-    //
-    //
-    if (this.onObject === true) {
-      this.velocity.y = Math.max(0, this.velocity.y);
-      this.canJump = true;
+      if (this.moveForward || this.moveBackward)
+        this.velocity.z -= this.direction.z * 400.0 * this.delta;
+      if (this.moveLeft || this.moveRight)
+        this.velocity.x -= this.direction.x * 400.0 * this.delta;
+      //
+      //
+      if (this.onObject === true) {
+        this.velocity.y = Math.max(0, this.velocity.y);
+        this.canJump = true;
+      }
+
+      this.controls.moveRight(-this.velocity.x * this.delta);
+      this.controls.moveForward(-this.velocity.z * this.delta);
+      this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
+      //
+      //
+      if (this.controls.getObject().position.y < 10) {
+        this.velocity.y = 0;
+        this.controls.getObject().position.y = 10;
+
+        this.canJump = true;
+      }
     }
-
-    this.controls.moveRight(-this.velocity.x * this.delta);
-    this.controls.moveForward(-this.velocity.z * this.delta);
-    this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
-    //
-    //
-    if (this.controls.getObject().position.y < 10) {
-      this.velocity.y = 0;
-      this.controls.getObject().position.y = 10;
-
-      this.canJump = true;
-    }
-    // }
     //
     //
     this.prevTime = this.time;
@@ -492,7 +492,7 @@ class TropicalVoid extends Component {
   render() {
     return (
       <div className="scene-oblivion">
-        {/* <div className="blocker" ref={(ref) => (this.blocker = ref)}> */}
+        <div className="blocker" ref={(ref) => (this.blocker = ref)}>
           {/* --------------------- */}
           {/* --------------------- */}
           {/* --------------------- */}
@@ -513,7 +513,7 @@ class TropicalVoid extends Component {
           </div>
           {/* --------------------- */}
           {/* --------------------- */}
-        {/* </div> */}
+        </div>
         {/* --------------------- */}
       </div>
     );

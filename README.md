@@ -2,22 +2,43 @@
 
  <br>
   <br>
+  
+  - NEW WORDS
+
+> raycaster
+
+### What is RAYCAST?
+
+[<img src="./src/images/tenor.gif"/>](https://youtu.be/1IyH6NjaxFo)
+
+- In a shooter game like counter strike, **when you shoot**, the **bullet** is no a gameObject travelling fast, but **is a "Ray" from the gun to N distance**. And every player in this ray get damaged.
+
+> See the example above ( Jiban shooting some villain )
+
+[What is Raycast?](https://forum.unity.com/threads/what-is-raycast.400698/)
+
    <br>
     <br>
 
-#### START by importing the code from the node modules, just like in the past tests:
+# DEBUT 🐙
+
+### First Person Control
+
+##### Start by importing the code from the node modules, just like in the past tests:
 
 ```javascript
 import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls";
 ```
 
-<br>
-
 ##### preview of what you are importing (inside the link)
 
 - ALSO... to understand a bit this code, check out the beginners app we created in class
 
-[beginners commands videgame](https://github.com/nadiamariduena/first-game-dci/blob/master/src/scripts/moving-character.js)
+<br>
+
+[Beginners commands videgame | DCI fbw_26](https://github.com/nadiamariduena/first-game-dci/blob/master/src/scripts/moving-character.js)
+
+<br>
 
 ```javascript
 import * as THREE from "three";
@@ -509,7 +530,7 @@ this.cameraControlsFirstPerson.movementSpeed = 10;
 <br>
 <br>
 
-### FIGURING a way to prevent the camera going up and down like so:
+#### FIGURING a way to prevent the camera going up and down like so:
 
 - I found out you can **change** the following **inside the node modules:**
 
@@ -530,7 +551,9 @@ this.lookVertical = true; //
 <br>
 <br>
 
-#### I WILL TRY another code that seems to me more of a (beginner level) than the one i am trying, so this code below is the code i ve been studying until now:
+###### (UPDATE) Not really but its much easier to understand!
+
+##### I WILL TRY another code that seems to me more of a (beginner level) than the one i am trying, so this code below is the code i ve been studying until now:
 
 ```javascript
 import React, { Component } from "react";
