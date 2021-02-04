@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 //
 
@@ -9,7 +9,7 @@ import Home from "./components/home/Home";
 class App extends Component {
   render() {
     return (
-      <Router>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <div className="App">
           <div id="wrapper-app">
             <Switch>
@@ -18,7 +18,7 @@ class App extends Component {
             </Switch>
           </div>
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
