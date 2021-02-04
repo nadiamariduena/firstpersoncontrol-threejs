@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/firstpersoncontrol-threejs/static/css/main.8ccb0475.chunk.css",
-    "main.js": "/firstpersoncontrol-threejs/static/js/main.66047065.chunk.js",
-    "main.js.map": "/firstpersoncontrol-threejs/static/js/main.66047065.chunk.js.map",
+    "main.js": "/firstpersoncontrol-threejs/static/js/main.883c987b.chunk.js",
+    "main.js.map": "/firstpersoncontrol-threejs/static/js/main.883c987b.chunk.js.map",
     "runtime-main.js": "/firstpersoncontrol-threejs/static/js/runtime-main.4e0bdbc3.js",
     "runtime-main.js.map": "/firstpersoncontrol-threejs/static/js/runtime-main.4e0bdbc3.js.map",
     "static/js/2.109796f1.chunk.js": "/firstpersoncontrol-threejs/static/js/2.109796f1.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.4e0bdbc3.js",
     "static/js/2.109796f1.chunk.js",
     "static/css/main.8ccb0475.chunk.css",
-    "static/js/main.66047065.chunk.js"
+    "static/js/main.883c987b.chunk.js"
   ]
 }
