@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/firstpersoncontrol-threejs/static/css/main.8ccb0475.chunk.css",
+    "main.js": "/firstpersoncontrol-threejs/static/js/main.66047065.chunk.js",
+    "main.js.map": "/firstpersoncontrol-threejs/static/js/main.66047065.chunk.js.map",
+    "runtime-main.js": "/firstpersoncontrol-threejs/static/js/runtime-main.4e0bdbc3.js",
+    "runtime-main.js.map": "/firstpersoncontrol-threejs/static/js/runtime-main.4e0bdbc3.js.map",
+    "static/js/2.109796f1.chunk.js": "/firstpersoncontrol-threejs/static/js/2.109796f1.chunk.js",
+    "static/js/2.109796f1.chunk.js.map": "/firstpersoncontrol-threejs/static/js/2.109796f1.chunk.js.map",
+    "static/js/3.3154b460.chunk.js": "/firstpersoncontrol-threejs/static/js/3.3154b460.chunk.js",
+    "static/js/3.3154b460.chunk.js.map": "/firstpersoncontrol-threejs/static/js/3.3154b460.chunk.js.map",
+    "index.html": "/firstpersoncontrol-threejs/index.html",
+    "static/css/main.8ccb0475.chunk.css.map": "/firstpersoncontrol-threejs/static/css/main.8ccb0475.chunk.css.map",
+    "static/js/2.109796f1.chunk.js.LICENSE.txt": "/firstpersoncontrol-threejs/static/js/2.109796f1.chunk.js.LICENSE.txt",
+    "static/media/main.scss": "/firstpersoncontrol-threejs/static/media/Ubuntu-Regular.fbdecfce.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4e0bdbc3.js",
+    "static/js/2.109796f1.chunk.js",
+    "static/css/main.8ccb0475.chunk.css",
+    "static/js/main.66047065.chunk.js"
+  ]
+}
