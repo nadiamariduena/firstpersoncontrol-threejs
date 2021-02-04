@@ -1,26 +1,31 @@
 import React, { Component } from "react";
 import * as THREE from "three";
-import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
+//
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls";
+// import { FirstPersonControls } from "firstpersoncontrols.js";
+//
+//
+
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 //
 //
+
 const style = {
   height: 600, // we can control scene size by setting container dimensions
 };
-let raycaster;
-/*
+//
 
-
-
-
-
-
-  */
+//
+//
 class TropicalVoid extends Component {
   componentDidMount() {
     this.sceneSetup();
     this.addCustomSceneObjects();
     this.startAnimationLoop();
+
     //
     window.addEventListener("resize", this.handleWindowResize);
   }
@@ -32,7 +37,7 @@ class TropicalVoid extends Component {
     // right now with the first person control,
     // we dont need this dispose as it s already included inside the three folder, check the read me, in the
     // beginning you will find a copy of the code inside the threejs that I am using.
-    this.controls.dispose();
+    // this.controls.dispose();
   }
   /*
 
@@ -41,41 +46,59 @@ class TropicalVoid extends Component {
   */
   // 1
   sceneSetup = () => {
-    //
-    //----------------
-    this.objects = [];
-    //----------------
-    //
-
-    this.moveForward = false;
-    this.moveBackward = false;
-    this.moveLeft = false;
-    this.moveRight = false;
-    this.canJump = false;
-
-    this.prevTime = performance.now();
-    this.velocity = new THREE.Vector3();
-    this.direction = new THREE.Vector3();
-    this.vertex = new THREE.Vector3();
-    this.color = new THREE.Color();
     // background color scene
     // this.lemonChiffon = "rgb(240, 224, 190)";
 
     const width = this.eleModelBlOne.clientWidth;
     const height = this.eleModelBlOne.clientHeight;
     //
+
     this.scene = new THREE.Scene();
-    // this.scene.background = new THREE.Color(0xffffff);
+    //
+    //
     this.camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      1,
-      1000
+      55, // fov = field of view
+      width / height, // aspect ratio
+      1, // near plane
+      30000 // far plane
     );
-    this.camera.position.y = 10;
+    /*
+    
+    
+    original
+    
+    this.camera = new THREE.PerspectiveCamera(
+      //
+      25, // fov = field of view
+      width / height, // aspect ratio
+      0.1, // near plane
+      1000 // far plane
+    );
+    
+    
+    
+    
+    
+    
+    
+    
+    */
+    //----------------------------------
+    //           AXES HELPER
+    //----------------------------------
+    // This block of code is just to help you to see where you are at in the scene
+    // if i add the this.axes, it s going to clash with the dispose inside the
+    //
+    // const axes = new THREE.AxesHelper(50); //origin 50
+    // this.scene.add(axes);
+    //
+    this.camera.position.x = 12;
+    this.camera.position.y = 0;
+    this.camera.position.z = 0; // origin: 50
+    //
+    this.camera.lookAt(this.scene.position); //we are looking at the center of the scene(depends of what yoou have in the camera position)
 
     //
-
     //
     this.renderer = new THREE.WebGL1Renderer({
       // set the transparency of the scene, otherwise its black
@@ -88,151 +111,55 @@ class TropicalVoid extends Component {
     //
 
     //
-    //renderer.setPixelRatio( window.devicePixelRatio );
+
+    //
+    //
+    // *************************************
+    //
+    //
+    //-------------- before the first person controls , we had this:
+    // OrbitControls allow a camera to orbit around the object
+    // https://threejs.org/docs/#examples/controls/OrbitControls
+    // this.controls = new OrbitControls(this.camera, this.eleModelBlOne);
+    //  ------------- **
+    //
+    //
+    //
+    //  to limit zoom distance so that the User
+    //  dont zoom out of the specified range
+
+    // this.controls.maxDistance = 70;
+
+    //
+    //
+    //
     this.renderer.setSize(width, height);
     // BG color from the scene
     // this.renderer.setClearColor(this.lemonChiffon);
     this.renderer.shadowMap.enabled = true;
     // here you append it to the jsx
     this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
-    // test
-    this.blocker.appendChild(this.renderer.domElement);
-    //
-    //
-    //
-    //
 
-    //---------------------------
-    //     PointerLockControl
-    //---------------------------
-    this.controls = new PointerLockControls(
+    this.cameraControlsFirstPerson = new FirstPersonControls(
       this.camera,
-      this.renderer.domElement
+      this.eleModelBlOne
     );
-    //
-    //
-    // If i change this to a function () {} it will give me an error
-    // vasilis say:
-    // this.eleModelBlOne.addEventListener("click", () => {
-    //   this.controls.lock();
-    // });
-    this.eleModelBlOne.addEventListener("click", () => {
-      this.controls.lock();
-      // it gives you access to raw mouse movement.LOCKS
-      // the target of the mouse events to a single element ,
-      // eliminates limits on how far mouse movement can go in a single direction,
-      // and removes the cursor from view. Good for 1 person 3d games
-      // ***
-      // So when you are actually moving the mouse across the screen (without displacing,)
-      // the pointer has been LOCK to the canvas
-      console.log("I clicked");
-    });
-    //
-    // this.controls.addEventListener("lock", () => {
-    //   this.eleModelBlOne.style.display = "none";
-    //   this.blocker.style.display = "none";
-    // });
-    this.controls.addEventListener("lock", () => {
-      // i dunno why we hiding it on click...
-      this.eleModelBlOne.style.display = "none";
-      // this.blocker.style.display = 'none';
-    });
-    //
-    // this.controls.addEventListener("unlock", () => {
-    //   this.blocker.style.display = "block";
-    //   this.eleModelBlOne.style.display = "";
-    // });
-    this.controls.addEventListener("unlock", () => {
-      //vasilis this.blocker.style.display = "block";
-      //vasilis  this.eleModelBlOne.style.display = "";
-      this.eleModelBlOne.style.display = "block";
-    });
-    // //
-    this.scene.add(this.controls.getObject());
-    //
-    //
-    //
-    //
-    //-------------------------------
-    //             KEYS
-    //-------------------------------
-    //
-    //
-    const onKeyDown = function (event) {
-      switch (event.code) {
-        case "ArrowUp":
-        case "KeyW":
-          this.moveForward = true;
-          break;
+    // ------------ with this 2 lines , the camera will move really fast, its better to hide it while testing it
+    this.cameraControlsFirstPerson.lookSpeed = 0.05; // the speed when you move (without clicking)
+    // lookSpeed = 0.02; slow
+    // lookSpeed = 1; extremely fast
+    this.cameraControlsFirstPerson.movementSpeed = 8; //the speed when you click
 
-        case "ArrowLeft":
-        case "KeyA":
-          this.moveLeft = true;
-          break;
+    // this.cameraControlsFirstPerson.maxPolarAngle = Math.PI / 2;
 
-        case "ArrowDown":
-        case "KeyS":
-          this.moveBackward = true;
-          break;
-
-        case "ArrowRight":
-        case "KeyD":
-          this.moveRight = true;
-          break;
-
-        //  ---------
-        //  JUMP
-        //  ---------
-        case "Space":
-          if (this.canJump === true) this.velocity.y += 350;
-          this.canJump = false;
-          break;
-      }
-    };
-
-    const onKeyUp = function (event) {
-      switch (event.code) {
-        case "ArrowUp":
-        case "KeyW":
-          this.moveForward = false;
-          break;
-
-        case "ArrowLeft":
-        case "KeyA":
-          this.moveLeft = false;
-          break;
-
-        case "ArrowDown":
-        case "KeyS":
-          this.moveBackward = false;
-          break;
-
-        case "ArrowRight":
-        case "KeyD":
-          this.moveRight = false;
-          break;
-      }
-    };
-    //
-    //
-    document.addEventListener("keydown", onKeyDown, false);
-
-    document.addEventListener("keyup", onKeyUp, false);
-
-    //
-
-    //
-    raycaster = new THREE.Raycaster(
-      new THREE.Vector3(),
-      new THREE.Vector3(0, -1, 0),
-      0,
-      10
-    );
     //
     //
     //
     //
   };
+  //
+  //
+  //
   //
 
   /*
@@ -245,124 +172,79 @@ class TropicalVoid extends Component {
   */
   // 2
   addCustomSceneObjects = () => {
-    //-------------------------------
-    //
-    //
-    // ---------------
-    // floor Geometry
-    // ---------------
-
-    this.floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
-    this.floorGeometry.rotateX(-Math.PI / 2);
-    //
-    //-------------------
-    // vertex displacement
-    //-------------------
-    //
-    let position = this.floorGeometry.attributes.position;
-    //
-    for (let i = 0, l = position.count; i < l; i++) {
-      this.vertex.fromBufferAttribute(position, i);
-      this.vertex.x += Math.random() * 20 - 10;
-      this.vertex.y += Math.random() * 2;
-      this.vertex.z += Math.random() * 20 - 10;
-      position.setXYZ(i, this.vertex.x, this.vertex.y, this.vertex.z);
-    }
-    // ensure each face has unique vertices  **
-    this.floorGeometry = this.floorGeometry.toNonIndexed();
-    //
-    position = this.floorGeometry.attributes.position;
-    //
-    //--------------
-    // colorsFloor
-    //--------------
-    const colorsFloor = [];
-    //
-    // what makes the triangles of the floor have different colors
-    for (let i = 0, l = position.count; i < l; i++) {
-      // here you are generating random colors HSL
-      this.color.setHSL(
-        Math.random() * 0.3 + 0.5,
-        0.75,
-        Math.random() * 0.25 + 0.75
-      );
-      colorsFloor.push(this.color.r, this.color.g, this.color.b);
-    }
-    //
-    this.floorGeometry.setAttribute(
-      "color",
-      new THREE.Float32BufferAttribute(colorsFloor, 3)
-    );
-    //
-    //
-    this.floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
-    //
-    //
-    // ------------ Here you add to the scene all the ABOVE -----
-    this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
-    this.scene.add(this.floor);
-    //
-    //
-    // ---------
-    // BOXES GEOMETRY
-    // ---------
-    // .toNonIndexed();  ensure each face has unique vertices
-    this.boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
-    //
-    position = this.boxGeometry.attributes.position;
-    //--------------
-    // colors Box
-    //--------------
-    const colorsBox = [];
-    //
-    for (let i = 0, l = position.count; i < l; i++) {
-      this.color.setHSL(
-        Math.random() * 0.3 + 0.5,
-        0.75,
-        Math.random() * 0.25 + 0.75
-      );
-      colorsBox.push(this.color.r, this.color.g, this.color.b);
-    }
-    //
-    this.boxGeometry.setAttribute(
-      "color",
-      new THREE.Float32BufferAttribute(colorsBox, 3)
-    );
-    //
-    // the 500 correspond to the amount of boxes
-    // the material is MeshPhong, apparently its a good material to cast shadows
-    for (let i = 0; i < 500; i++) {
-      const boxMaterial = new THREE.MeshPhongMaterial({
-        specular: 0xffffff,
-        flatShading: true,
-        vertexColors: true,
-        // push a colour per vertex
-      });
-      boxMaterial.color.setHSL(
-        Math.random() * 0.2 + 0.5,
-        0.75,
-        Math.random() * 0.25 + 0.75
-      );
-      // ---------
-      // BOX
-      // ---------
-      const box = new THREE.Mesh(this.boxGeometry, boxMaterial);
-      box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
-      box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
-      box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
-
-      this.scene.add(box);
-      this.objects.push(box);
-    }
-    //
-    //
-    //
-    //
-    //
     //----------------------------------
     //         BLENDER  MODELS
     //----------------------------------
     //
+    const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("myDecoder/");
+    loader.setDRACOLoader(dracoLoader);
+
+    //
+    // terrain_grosso_moon.-Normalize-4_.glb
+    // 49,4Kb
+    loader.load("./models/palmera-sun-palmeras2_retoucheeeggg.glb", (gltf) => {
+      this.meshy = gltf.scene;
+
+      gltf.scene.traverse((model) => {
+        if (model.material) model.material.metalness = 0.08;
+
+        model.receiveShadow = true;
+        model.scale.set(2, 2, 2);
+        // model.rotation.y = 1;
+        // model.rotation.x += -0;
+        // model.rotation.y += 0;
+        //
+        model.position.x = 0;
+        model.position.y = -0.4;
+        model.position.z = 0;
+        //
+        //
+        //
+      });
+
+      this.scene.add(gltf.scene);
+    });
+    //
+    // Add PLANE  w , h , segments
+    const planeGeometry = new THREE.PlaneGeometry(500, 500, 100, 55);
+    const planeMaterial = new THREE.MeshLambertMaterial({
+      color: 0xdddddd,
+      wireframe: true,
+    });
+    // var planeMaterial = new THREE.MeshLambertMaterial((color: 0xff0000));
+    this.plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    //
+    this.plane.rotation.x = -0.5 * Math.PI;
+    this.plane.position.y = -1;
+    //
+    //
+    // *** RECEIVE SHADOW
+    // related to the light and the shadow
+    this.plane.receiveShadow = true;
+    this.scene.add(this.plane);
+    //
+    //
+    // var box = new THREE.Box3();
+    // box.setFromObject(this.plane);
+    // //
+    // //
+    // if (this.camera.position.x > box.max.x) {
+    //   this.camera.position.x = box.max.x;
+    // }
+
+    // if (this.camera.position.x < box.min.x) {
+    //   this.camera.position.x = box.max.x;
+    // }
+
+    // if (this.camera.position.z > box.max.z) {
+    //   this.camera.position.z = box.max.z;
+    // }
+
+    // if (this.camera.position.z < box.min.z) {
+    //   this.camera.position.z = box.max.z;
+    // }
 
     /*
     
@@ -423,96 +305,39 @@ class TropicalVoid extends Component {
     this.scene.add(this.spotLight);
     // //
     //
+
+    /*
+
+
+
+ 
+ */
+    //
+    //
+    // ------------------ clock
+    this.stop = 0;
+    this.stepy = 0;
+
+    this.clock = new THREE.Clock();
+
+    //
+    //
     //
   };
-
-  /*
-  
-  
-  
-  
-  
-  
-  
-  
-  */
 
   // 3
   startAnimationLoop = () => {
-    //
-    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+    this.stop += 0.005;
 
-    // Save the current time
-    this.time = performance.now();
-    //// Are the controls enabled? (Does the browser have pointer lock?)
-    if (this.controls.isLocked === true) {
-      //
-      raycaster.ray.origin.copy(this.controls.getObject().position);
-      // A ray that emits from an origin in a certain direction.
-      raycaster.ray.origin.y -= 10;
-
-      this.intersections = raycaster.intersectObjects(this.objects);
-
-      this.onObject = this.intersections.length > 0;
-      // Create a delta value based on current time
-      this.delta = (this.time - this.prevTime) / 1000;
-      //
-      //
-      //
-      // Set the velocity.x and velocity.z using the calculated time delta
-      this.velocity.x -= this.velocity.x * 10.0 * this.delta;
-      this.velocity.z -= this.velocity.z * 10.0 * this.delta;
-      // As velocity.y is our "gravity," calculate delta
-      this.velocity.y -= 9.8 * 100.0 * this.delta; // 100.0 = mass
-
-      if (this.controls.moveForward) {
-        this.velocity.z -= 400.0 * this.delta;
-      }
-
-      if (this.controls.moveBackward) {
-        this.velocity.z += 400.0 * this.delta;
-      }
-
-      if (this.controls.moveLeft) {
-        this.velocity.x -= 400.0 * this.delta;
-      }
-
-      if (this.controls.moveRight) {
-        this.velocity.x += 400.0 * this.delta;
-      }
-
-      if (this.moveForward || this.moveBackward)
-        this.velocity.z -= this.direction.z * 400.0 * this.delta;
-      if (this.moveLeft || this.moveRight)
-        this.velocity.x -= this.direction.x * 400.0 * this.delta;
-      //
-      //
-      if (this.onObject === true) {
-        this.velocity.y = Math.max(0, this.velocity.y);
-        this.canJump = true;
-      }
-
-      this.controls.moveRight(-this.velocity.x * this.delta);
-      this.controls.moveForward(-this.velocity.z * this.delta);
-      this.controls.getObject().position.y += this.velocity.y * this.delta; // new behavior
-      //
-      //
-      //
-      if (this.controls.getObject().position.y < 10) {
-        this.velocity.y = 0;
-        this.controls.getObject().position.y = 10;
-
-        this.canJump = true;
-      }
-    }
+    this.stepy += 0.00005;
+    this.delta = this.clock.getDelta();
     //
     //
-    this.prevTime = this.time;
-
+    this.cameraControlsFirstPerson.update(this.delta);
     //
     this.renderer.render(this.scene, this.camera);
+    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
   };
-
   /*
 
 
@@ -536,30 +361,11 @@ class TropicalVoid extends Component {
   render() {
     return (
       <div className="scene-oblivion">
-        <div className="blocker" ref={(ref) => (this.blocker = ref)}>
-          {/* --------------------- */}
-          {/* --------------------- */}
-          {/* --------------------- */}
-          <div
-            className="modelBleOne"
-            style={style}
-            ref={(ref) => (this.eleModelBlOne = ref)}
-          >
-            <div className="commands">
-              <span>Click to play</span>
-              <br />
-              <br />
-              Move: WASD
-              <br />
-              Jump: SPACE
-              <br />
-              Look: MOUSE
-            </div>
-          </div>
-          {/* --------------------- */}
-          {/* --------------------- */}
-        </div>
-        {/* --------------------- */}
+        <div
+          className="modelBleOne"
+          style={style}
+          ref={(ref) => (this.eleModelBlOne = ref)}
+        ></div>
       </div>
     );
   }
