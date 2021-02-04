@@ -3,24 +3,33 @@
  <br>
   <br>
   
-  - NEW WORDS
+  
+## DIFFERENCES
 
-> raycaster
+<br>
 
-### What is RAYCAST?
+- **FirstPersonControls** is actually an alternative implementation of FlyControls. Meaning you can use WASD, Arrow Keys and Mouse to freely transform the camera in 3D space.
 
-[<img src="./src/images/tenor.gif"/>](https://youtu.be/1IyH6NjaxFo)
+<br>
 
-- In a shooter game like counter strike, **when you shoot**, the **bullet** is no a gameObject travelling fast, but **is a "Ray" from the gun to N distance**. And every player in this ray get damaged.
+- **PointerLockControls** is different since it uses the Pointer Lock API. That means the mouse is captured (the cursor is hidden during the capturing) and only mouse movements (so the actual delta values) transform the camera when looking around. This is the behavior you usually know from First-Person games.
 
-> See the example above ( Jiban shooting some villain )
+<br>
 
-[What is Raycast?](https://forum.unity.com/threads/what-is-raycast.400698/)
+[<img src="./src/images/Unity-2018-Vid.gif"/>]()
 
-   <br>
-    <br>
+> Probably a third person control, using some collision
 
-# DEBUT 🐙
+<br>
+
+[Simple Third Person Camera (using Three.js/JavaScript)](https://youtu.be/UuNPHOJ_V5o)
+
+[Physics | Collision ](https://www.youtube.com/watch?v=THI82Q-P8Fo&feature=emb_title)
+
+<br>
+<br>
+
+### DEBUT 🐙
 
 ### First Person Control
 
